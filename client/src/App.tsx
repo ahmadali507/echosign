@@ -1,14 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import {
-  ChangePassword,
-  ForgetPassword,
-  Home,
-  Login,
-  Register,
-  ResetPassword,
-  TermsAndConditions,
-} from "./pages";
+import {ChangePassword,ForgetPassword,Home,Login,Register,ResetPassword,TermsAndConditions} from "./pages";
 
 function App() {
   return (
