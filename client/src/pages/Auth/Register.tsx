@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react"
 
 const Register = () => {
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
@@ -20,28 +20,32 @@ const Register = () => {
 
   ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
-  };
+    const { name, value } = e.target;
+    console.log(`Setting ${name} to:`, value);
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
 
   ///////////////////////////////////////////////////////// COMPONENTS ///////////////////////////////////////////////////////////
   const PasswordToggle = ({ id }: { id: string }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
-
+      setShowPassword(!showPassword)
+    }
+    
     return (
       <div className="relative">
         <input
-          type={showPassword ? "text" : "password"}
-          id={id}
-          onChange={onChange}
-          name={id}
-          placeholder="Password"
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded pr-12"
-        />
+        type={showPassword ? "text" : "password"}
+        id={id}
+        onChange={onChange}
+        name={id}
+        value={id == "password" ? formData.password : formData.confirmPassword}
+        placeholder="Password"
+        required
+        className="w-full px-4 py-2 border border-gray-300 rounded pr-12"
+      />
+
         <img
           id={`c-eye-${id}`}
           src={
@@ -153,4 +157,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Register

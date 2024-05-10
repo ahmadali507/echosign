@@ -3,11 +3,32 @@ function TermsAndConditions(){
 
     
     return (
+        <div className="absolute top-0 w-full bg-gradient-to-b from-blue-500 to-white">
+        <div className="fixed top-0 left-0 w-full h-14 bg-white border border-black z-10"></div>
+        <img
+          src="src/EchoSign.ico"
+          alt="Image"
+          className="fixed top-1 left-1 w-36 h-11 z-10"
+        />
+        <div>
+            <div className='ml-8 mt-20 text-7xl text-green-300 font-bold text-center'>
+            <h1 className="pb-3">Terms and Conditions </h1></div>
+        </div>
+        
+        <div className="flex justify-center mt-20">
+            <div className="max-w-sm border border-black bg-green-300 hover:bg-green-400 rounded-lg p-6 transition duration-300 transform hover:scale-105">
+                <h1 className="text-center text-white text-3xl font-bold mb-4 underline">Vision</h1>
+                <p className="text-center text-white text-lg">
+            Our vision at EchoSign is to empower seamless communication by bridging spoken language with sign language. We strive to celebrate diversity, amplify silent voices, and foster inclusive connections that transcend linguistic barriers, enabling everyone to express themselves freely and be understood.
+                </p>
+            </div>
+        </div>
+        {/*}
         <div className="bg-gradient-to-b from-green-300 to-blue-500 items-center h-screen">
         <div className="fixed top-0 left-0 w-full h-14 bg-white border border-black z-10">
         <img src="src/EchoSign.ico" alt="Image" className="fixed top-1 left-1 w-36 h-11 z-10"/>
         <div className='flex justify-center items-center mt-2'>
-            <h1 className='font-bold underline text-2xl z-10'>Terms and Conditions for EchoSign</h1>
+            <h1 className='mt-14 font-bold underline text-2xl z-10'>Terms and Conditions for EchoSign</h1>
         </div>
             <div className="mt-8 ml-16 mr-10 space-y-2">
             <p>Welcome to EchoSign, a website dedicated to facilitating communication by converting American Sign Language (ASL) into voice. Before using our services, please carefully read the following terms and conditions:</p>
@@ -65,7 +86,8 @@ function TermsAndConditions(){
             
             </div>
         </div>
-        </div>
+    </div>*/}
+    </div>
     )
 }
 
