@@ -7,7 +7,7 @@ function TermsAndConditions(){
         <div className="fixed top-0 left-0 w-full h-14 bg-white border border-black z-10">
         <img src="src/EchoSign.ico" alt="Image" className="fixed top-1 left-1 w-36 h-11 z-10"/>
         <div className='flex justify-center items-center mt-2'>
-            <h1 className='font-bold underline text-2xl z-10'>Terms and Conditions for EchoSign</h1>
+            <h1 className='mt-14 font-bold underline text-2xl z-10'>Terms and Conditions for EchoSign</h1>
         </div>
             <div className="mt-8 ml-16 mr-10 space-y-2">
             <p>Welcome to EchoSign, a website dedicated to facilitating communication by converting American Sign Language (ASL) into voice. Before using our services, please carefully read the following terms and conditions:</p>
