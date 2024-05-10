@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import { ChangePassword, ForgetPassword, Home, Login, Register, ResetPassword, TermsAndConditions } from "./pages";
+import { ChangePassword, ForgetPassword, Home, Login, Register, ResetPassword, TermsAndConditions, Contact } from "./pages";
 import DefaultLayout from "./wrappers/DefaultLayout";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contactus" element={<Contact />} />
         <Route path="/verify" element={<Login />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
