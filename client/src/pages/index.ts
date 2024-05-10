@@ -4,5 +4,6 @@ export { default as ForgetPassword } from './Auth/ForgetPassword'
 export { default as ResetPassword } from './Auth/ResetPassword'
 export { default as TermsAndConditions } from './Auth/TermsAndConditions'
 export { default as ChangePassword } from './Auth/ChangePassword'
+export { default as Contact } from './Auth/Contact'
 
 export { default as Home } from './Dashboard/Home'

@@ -3,17 +3,17 @@ import { RootState } from '../store';
 
 
 interface AuthState {
-  auth: User | null;
+  auth: any | null;
   isLoading: boolean;
   error: { message: string; code: string } | null;
 }
 
 
-export const signUp = createAsyncThunk<>('auth/signUp', async (userCredentials) => {
+export const signUp = createAsyncThunk<any, any>('auth/signUp', async (userCredentials) => {
   try {
 
 
-  } catch (error: Error) {
+  } catch (error: any) {
     throw error.message;
   }
 });
