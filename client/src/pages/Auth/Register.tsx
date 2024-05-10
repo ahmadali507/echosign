@@ -40,6 +40,7 @@ const Register = () => {
         id={id}
         onChange={onChange}
         name={id}
+        value={id == "password" ? formData.password : formData.confirmPassword}
         placeholder="Password"
         required
         className="w-full px-4 py-2 border border-gray-300 rounded pr-12"
