@@ -1,14 +1,15 @@
 
 export interface User {
   id?: string;
-  name: string;
-  email: string;
-  phone: string;
-  bio: string;
-  country: string;
-  state: string;
-  city: string;
-  zipCode: string;
-  partnerId: string;
-  photoUrl: string; 
-} 
+  username: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  isASL: boolean,
+  isTOFSAccepted: boolean,
+}
+
+export interface Error {
+  message: string;
+  code: string;
+}
