@@ -20,6 +20,9 @@ const Navbar = () => {
                 <Button variant='default' onClick={() => navigate('/login')}  >
                     Login
                 </Button>
+                <Button variant='default' onClick={() => navigate('/Contact')}  >
+                    Contact
+                </Button>
             </div>
         </div>
         
