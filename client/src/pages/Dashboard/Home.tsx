@@ -39,10 +39,10 @@ const Home = () => {
                 <div className="flex justify-between ml-56 mr-56 mt-20">
                     <div className="text-left text-black text-3xl font-bold mb-4 max-w-md">
                         <h1>Empowering communication.</h1>
-                        <p className="pb-1 pt-1">Bridging languages.</p>
+                        <p className="pb-3 pt-3">Bridging languages.</p>
                         <p>Fostering inclusion.</p>
                     </div>
-                    <div className="text-right text-black text-sm font-bold mb-4 max-w-md">
+                    <div className="text-right text-black text-sm font-bold mt-2 mb-4 max-w-md">
                         <h1>AI has the potential to gently nudge aside communication barriers between sign language and spoken language. Imagine conversations flowing effortlessly, with spoken words finding a graceful expression in signs and vice versa. This wouldn't just bridge the language gap, but could foster a deeper understanding between deaf and hearing communities.</h1>
                     </div>
                     
@@ -58,28 +58,24 @@ const Home = () => {
                         <img src={video} alt="Image" className="ml-8 w-36 z-10 pb-4" />
                         <div className="text-center">
                             <h1 className="font-bold">Start Camera</h1>
-                            <p className="text-xs">Click the camera icon to start camera.</p>
+                            <p className="text-xs pb-24">Click the camera icon to start camera.</p>
                         </div>
                     </div>
                     <div className="relative">
                         <img src={selfie} alt="Image" className="ml-4 w-20 z-10 pb-2" />
                         <div className="text-center">
                             <h1 className="font-bold">Start Recording</h1>
-                            <p className="text-xs">Record the signs.</p>
+                            <p className="text-xs pb-24">Record the signs.</p>
                         </div>
                     </div>
                     <div className="relative mr-36">
                         <img src={recording} alt="Image" className="ml-8 w-24 z-10 pb-4" />
                         <div className="text-center">
                             <h1 className="font-bold">Play Audio</h1>
-                            <p className="text-xs">Click audio button to listen.</p>
+                            <p className="text-xs pb-24">Click audio button to listen.</p>
                         </div>
                     </div>
-                </div>
-
-
-                <div className="flex justify-between items-center bg-slate-300 h-fit px-16 py-4 w-full">
-
+                    
                 </div>
 
 
