@@ -1,1 +1,13 @@
 export { default as Logo } from './react.svg'
+export { default as recording} from './undraw_recording_re_5xyq.svg'
+export { default as selfie} from './undraw_selfie_re_h9um.svg'
+export { default as video} from './undraw_video_files_fu10.svg'
+export { default as registeration} from './undraw_access_account_re_8spm.svg'
+{/*export { default as youtube} from './youtube.svg'
+export { default as whatsapp} from './whatsapp.svg'
+export { default as twitter} from './twitter.svg'
+export { default as messenger} from './messenger.svg'
+export { default as instagram} from './instagram.svg'
+export { default as google} from './google.svg'
+export { default as facebook} from './facebook.svg'
+export { default as email} from './email.svg'*/}
