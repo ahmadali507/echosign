@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 
@@ -13,7 +14,11 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                         {children}
                     </div>
                 </main>
+                <div className='relative'>
+                    <Footer />
+                </div>
             </div>
+            
         </div>
     );
 };

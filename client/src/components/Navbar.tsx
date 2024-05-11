@@ -1,6 +1,7 @@
 import { Logo } from '@/assets'
 import { useNavigate } from 'react-router-dom'
 import { Button } from './ui/button'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -10,7 +11,7 @@ const Navbar = () => {
     return (
         <div className="flex justify-between items-center h-[5rem] bg-white w-full ">
 
-            <img src={Logo} alt="Image" className="w-36 z-10" />
+            <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
 
             <div className='flex justify-start gap-4' >
                 <Button variant='default' onClick={() => navigate('/register')}  >
@@ -19,8 +20,10 @@ const Navbar = () => {
                 <Button variant='default' onClick={() => navigate('/login')}  >
                     Login
                 </Button>
+
             </div>
         </div>
+
 
 
     )

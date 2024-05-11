@@ -1,1 +1,17 @@
 export { default as Logo } from './logo.png'
+export { default as recording} from './undraw_recording_re_5xyq.svg'
+export { default as selfie} from './undraw_selfie_re_h9um.svg'
+export { default as video} from './undraw_video_files_fu10.svg'
+export { default as registeration} from './undraw_access_account_re_8spm.svg'
+export { default as contact} from './undraw_personal_email_re_4lx7.svg'
+
+export { default as youtube} from './Logos/youtube.svg'
+export { default as whatsapp} from './Logos/whatsapp.svg'
+export { default as twitter} from './Logos/twitter.svg'
+export { default as messenger} from './Logos/messenger.svg'
+export { default as instagram} from './Logos/instagram.svg'
+export { default as facebook} from './Logos/facebook.svg'
+export { default as email} from './Logos/email.svg'
+export { default as github} from './Logos/github.svg'
+
+export { default as copyright} from './Logos/copyright.svg'

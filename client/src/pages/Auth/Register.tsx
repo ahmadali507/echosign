@@ -1,6 +1,7 @@
 import { User } from "@/interfaces";
 import { register } from "@/store/reducers/authSlice";
 import { Eye, EyeOff } from "lucide-react";
+import { registeration } from "@/assets";
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,7 +35,7 @@ const Register = () => {
       }
 
     })
-      .catch((err) => {
+      .catch((err:any) => {
         console.log(err)
       })
 
@@ -46,7 +47,10 @@ const Register = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div style={{ height: 'calc(100vh - 5rem)' }} className="bg-gradient-to-b from-green-300 to-blue-500 flex justify-center items-center h-screen">
+    <div className="bg-gradient-to-b from-blue-500 to-white flex items-center">
+      <img src={registeration} alt="Image" className="ml-36 w-3/12 z-10"/>
+
+      <div style={{ height: 'calc(100vh - 5rem)' }} className="ml-72 flex justify-center items-center h-screen mb-14 mt-6">
       <div className="container bg-green-300 mt-16 mb-8 mx-auto p-8 pb-4 w-96 rounded-lg shadow-md border border-black">
         <h1 className="text-center font-sans font-bold text-4xl">Register</h1>
         <form onSubmit={onSubmit} id="signin-form">
@@ -156,6 +160,8 @@ const Register = () => {
         </p>
         <div id="message" className="text-center"></div>
       </div>
+    </div>
+
     </div>
   );
 };

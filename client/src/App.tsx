@@ -17,7 +17,7 @@ function App() {
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        
+
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       </Routes>
     </DefaultLayout>
