@@ -51,7 +51,7 @@ const Rpass = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-gradient-to-b from-green-300 to-blue-500 flex justify-center items-center h-screen">
+    <div className="bg-gradient-to-b from-blue-500 to-white flex justify-center items-center h-screen">
       <div className="fixed top-0 left-0 w-full h-14 bg-white border border-black z-10">
         <img
           src="src/EchoSign.ico"

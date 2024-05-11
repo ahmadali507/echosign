@@ -10,9 +10,10 @@ const Home = () => {
         <div className="flex flex-col w-full bg-gradient-to-b from-blue-500 to-white">
 
             <div>
-                <div className='ml-8 mt-20 text-7xl text-green-300 font-bold text-center'>
+                <div className='ml-8 mt-20 mb-32 text-7xl text-green-300 font-bold text-center'>
                     <h1 className="pb-3">Amplifying Voice,</h1>
-                    <h1>Embracing Power of Signs</h1></div>
+                    <h1>Embracing Power of Signs</h1>
+                </div>
             </div>
 {/*
             <div className="flex justify-center mt-20">
@@ -36,7 +37,7 @@ const Home = () => {
             
 
 
-                <div className="flex justify-between ml-56 mr-56 mt-20">
+                <div className="flex justify-between mb-32 ml-56 mr-56 mt-20">
                     <div className="text-left text-black text-3xl font-bold mb-4 max-w-md">
                         <h1>Empowering communication.</h1>
                         <p className="pb-3 pt-3">Bridging languages.</p>
@@ -49,10 +50,10 @@ const Home = () => {
                 </div>
 
                 <div className="flex justify-center">
-                    <h1 className='text-center font-extrabold text-5xl w-3/5 pb-12 pt-12'>Hear your Signs through simple steps.</h1>
+                    <h1 className='text-center font-extrabold text-5xl mb-12 w-3/5 pb-12 pt-12'>Hear your Signs through simple steps.</h1>
                 </div>
 
-                <div className="flex justify-between items-center px-16 py-4 w-full">
+                <div className="flex justify-between items-center mb-20 px-16 py-4 w-full">
                     
                     <div className="relative ml-36">
                         <img src={video} alt="Image" className="ml-8 w-36 z-10 pb-4" />

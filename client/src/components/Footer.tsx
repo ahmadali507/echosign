@@ -7,6 +7,7 @@ import { facebook } from '@/assets'
 import { email } from '@/assets'
 import { github } from '@/assets'
 import { copyright } from '@/assets'
+import { Logo } from '@/assets'
 {/*
 import { useNavigate } from 'react-router-dom'
 import { Button } from './ui/button' */}
@@ -20,14 +21,21 @@ const Footer = () => {
         <div>
             <div className='border border-black py-0 w-full'></div>
 
-            <div className="flex justify-between ml-56 mr-56 mt-20">
-                    <div className="text-left text-black text-3xl font-bold mb-4 max-w-md">
-                        <h1>Make Communication easier and efficient with EchoSign. </h1>
-                        
+            <div className="flex justify-between ml-24 mr-56 mt-20">
+                    <div className="text-left text-black text-md mb-4 max-w-sm">
+                        <img src={Logo} alt="Image" className="w-36 z-10" />
+                        <h1>Make Communication easier and efficient with EchoSign. Bridge the gap, don't let anything stop you! </h1>        
                     </div>
-                    <div className="text-right text-black text-sm font-bold mt-2 mb-4 max-w-md">
-                        <h1>AI has the potential to gently nudge aside communication barriers between sign language and spoken language. Imagine conversations flowing effortlessly, with spoken words finding a graceful expression in signs and vice versa. This wouldn't just bridge the language gap, but could foster a deeper understanding between deaf and hearing communities.</h1>
+                    <div className="text-left text-black text-sm font-bold mb-10 max-w-md">
+                        <p className='pb-2'>Help</p>
+                        <p className='pb-2'>FAQs</p>
+                        <p className='pb-2'>Reviews</p>
+                        <p className='pb-2'>About Us</p>
+                        <p className='pb-2'>Contact Us</p>
+                        <p className='pb-2'>Privacy Policy </p>
+                        <p className='pb-2'>Terms and Conditions </p>
                     </div>
+                    
                     
                 </div>
             
@@ -35,7 +43,7 @@ const Footer = () => {
         FAQs
         About Us
         Privacy Policy 
-        Terms and Conditions
+        Privacy Policy 
         Contact Us
         Reviews
         Help
