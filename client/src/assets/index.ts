@@ -5,7 +5,6 @@ export { default as video} from './undraw_video_files_fu10.svg'
 export { default as registeration} from './undraw_access_account_re_8spm.svg'
 export { default as contact} from './undraw_personal_email_re_4lx7.svg'
 
-export { default as youtube} from './Logos/youtube.svg'
 export { default as whatsapp} from './Logos/whatsapp.svg'
 export { default as twitter} from './Logos/twitter.svg'
 export { default as messenger} from './Logos/messenger.svg'

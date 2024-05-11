@@ -1,4 +1,3 @@
-import { youtube } from '@/assets'
 import { whatsapp } from '@/assets'
 import { twitter } from '@/assets'
 import { messenger } from '@/assets'
@@ -8,6 +7,9 @@ import { email } from '@/assets'
 import { github } from '@/assets'
 import { copyright } from '@/assets'
 import { Logo } from '@/assets'
+import { Linkedin } from 'lucide-react'
+import { IoLogoYoutube } from 'react-icons/io'
+import { SiDiscord } from 'react-icons/si'
 {/*
 import { useNavigate } from 'react-router-dom'
 import { Button } from './ui/button' */}
@@ -49,7 +51,7 @@ const Footer = () => {
         Help
         */}
         <div className="flex justify-between items-center px-96 py-4 h-fit bg-white w-full ">
-            <img src={youtube} alt="Image" className="w-6 z-10" />
+            <IoLogoYoutube />
             <img src={whatsapp} alt="Image" className="w-6 z-10" />
             <img src={twitter} alt="Image" className="w-6 z-10" />
             <img src={instagram} alt="Image" className="w-6 z-10" />
@@ -57,6 +59,8 @@ const Footer = () => {
             <img src={email} alt="Image" className="w-6 z-10" />
             <img src={facebook} alt="Image" className="w-6 z-10" />
             <img src={github} alt="Image" className="w-6 z-10" />
+            <Linkedin />
+            <SiDiscord className='w-6 h-6 z-10'/>
         </div>
         <div className='pt-4 flex justify-center items-center bg-white h-fit w-full'>
             <p className="mr-1">Copyright</p>
