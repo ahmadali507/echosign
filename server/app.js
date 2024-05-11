@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -18,6 +19,28 @@ const CONNECTION_URL = process.env.ATLAS_URL;
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+const client = new TextToSpeechClient();
+app.get('/api/text-to-speech', async (req, res) => {
+  const text = req.query.text;
+
+  const request = {
+    input: { text },
+    voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+    audioConfig: { audioEncoding: 'MP3' },
+  };
+
+  try {
+    const [response] = await client.synthesizeSpeech(request);
+    console.log('response', response)
+    const audioContent = response.audioContent.toString('base64');
+    console.log('autdio', audioContent)
+    res.send({ audioContent });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error generating audio');
+  }
+});
 
 // serving static files | images
 const __filename = fileURLToPath(import.meta.url);

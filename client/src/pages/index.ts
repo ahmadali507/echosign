@@ -7,4 +7,5 @@ export { default as ChangePassword } from './Auth/ChangePassword'
 export { default as VerifyEmail } from './Auth/VerifyEmail'
 export { default as Contact } from './Auth/Contact'
 
-export { default as Home } from './Dashboard/Home'
+export { default as LandingPage } from './LandingPage'
+export { default as Dashboard } from './Dashboard'

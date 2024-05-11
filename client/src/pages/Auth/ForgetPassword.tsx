@@ -23,7 +23,7 @@ const ForgetPassword = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div style={{ height: 'calc(100vh - 4rem)' }} className="bg-gradient-to-b from-green-300 to-blue-500 flex justify-center items-center h-screen">
+    <div style={{ height: 'calc(100vh - 5rem)' }} className="bg-gradient-to-b from-green-300 to-blue-500 flex justify-center items-center h-screen">
       <div className="container bg-green-300 mt-16 mb-8 mx-auto p-8 pb-4 w-96 rounded-lg shadow-md border border-black">
         <h1 className="text-center font-sans font-bold text-4xl">Forget Password</h1>
         <form onSubmit={onSubmit} id="signin-form">

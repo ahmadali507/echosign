@@ -11,12 +11,14 @@ import otpGenerator from "otp-generator";
 
 export const register = async (req, res, next) => {
   try {
-    let { firstName, lastName, username, email, password } = req.body;
+    let { username, email, password } = req.body;
 
-    if (!firstName || !lastName || !username || !email || !password)
-      return next(createError(res, 400, "Make sure to provide all the fields"));
-    if (email && !validator.isEmail(email))
-      return next(createError(res, 400, "Invalid Email Address"));
+    if (!username)
+      return next(createError(res, 400, "Username is missing"));
+    if (!email)
+      return next(createError(res, 400, "Email is missing"));
+    if (!password)
+      return next(createError(res, 400, "Password is missing"));
 
     const findedUser = await User.findOne({ username });
     if (Boolean(findedUser))
@@ -28,33 +30,14 @@ export const register = async (req, res, next) => {
     if (username == process.env.ADMIN_USERNAME || email == process.env.ADMIN_EMAIL) role = "Admin";
     else role = role || "User";
 
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      username,
-      email,
-      password: hashedPassword,
-      role,
-    });
-    const otp = otpGenerator.generate(5, {
-      digits: true,
-      lowerCaseAlphabets: false,
-      upperCaseAlphabets: false,
-      specialChars: false,
-    });
+    const newUser = await User.create({ username, email, password: hashedPassword, role, });
+    const otp = otpGenerator.generate(5, { digits: true, lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false, });
     // const hashedOTP = await bcrypt.hash(otp, 12)
-    await OTP.create({
-      email,
-      otp,
-      name: "verify_register_otp",
-    });
+    await OTP.create({ email, otp, name: "verify_register_otp", });
 
     sendMail(email, "Verification", `<p>Your OTP code is ${otp}</p>`);
 
-    const token = jwt.sign(
-      { _id: newUser._id, role: newUser.role },
-      process.env.JWT_SECRET
-    );
+    const token = jwt.sign({ _id: newUser._id, role: newUser.role }, process.env.JWT_SECRET);
 
     res
       .cookie("code.connect", token, {
@@ -63,7 +46,7 @@ export const register = async (req, res, next) => {
         // expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       })
       .status(200)
-      .json({ result: newUser, message: "Registered successfully.", token }); // token is being passed just for development
+      .json({ result: newUser, message: "Registered successfully.", token, otp }); // token is being passed just for development
   } catch (err) {
     console.log('error', err)
     next(createError(res, 500, err.message));
@@ -81,15 +64,11 @@ export const verifyRegisterOTP = async (req, res, next) => {
     if (!findedUser) return createError(res, 400, "User not found");
 
     const otps = await OTP.find({ email });
-    if (otps.length == 0)
-      return next(createError(res, 400, "No otp for this email"));
+    if (otps.length == 0) return next(createError(res, 400, "No otp for this email"));
 
-    const verify_register_otps = otps.filter(
-      (otp) => otp.name == "verify_register_otp"
-    );
+    const verify_register_otps = otps.filter((otp) => otp.name == "verify_register_otp");
     const registerOTP = verify_register_otps[verify_register_otps.length - 1];
-    if (!registerOTP)
-      return next(createError(res, 400, "You have entered an expired otp"));
+    if (!registerOTP) return next(createError(res, 400, "You have entered an expired otp"));
 
     // const isValidOTP = await bcrypt.compare(plainOTP, hashedOTP)
     const isValidOTP = otp == registerOTP.otp;
@@ -98,7 +77,16 @@ export const verifyRegisterOTP = async (req, res, next) => {
     await User.updateOne({ email }, { verified: true });
     await OTP.deleteMany({ email, name: "verify_register_otp" });
 
-    res.status(200).json({ message: "Email Verified" });
+    const token = jwt.sign({ _id: newUser._id, role: newUser.role }, process.env.JWT_SECRET);
+
+
+    res
+      .cookie("code.connect", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      })
+      .status(200)
+      .json({ message: "Email verified.", token });
   } catch (err) {
     next(createError(res, 500, err.message));
   }

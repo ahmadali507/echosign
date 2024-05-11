@@ -8,9 +8,9 @@ const Navbar = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="flex justify-between items-center px-16 py-4 h-[4rem] bg-white w-full ">
+        <div className="flex justify-between items-center h-[5rem] bg-white w-full ">
 
-            <img src={Logo} alt="Image" className="w-12 z-10" />
+            <img src={Logo} alt="Image" className="w-36 z-10" />
 
             <div className='flex justify-start gap-4' >
                 <Button variant='default' onClick={() => navigate('/register')}  >
