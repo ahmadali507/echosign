@@ -9,16 +9,16 @@ const Navbar = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="flex justify-between items-center h-[5rem] bg-white w-full ">
+        <div className="flex justify-between items-center h-[6rem] bg-white w-full ">
 
             <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
 
             <div className='flex justify-start gap-4' >
-                <Button variant='default' onClick={() => navigate('/register')}  >
-                    Sign in
-                </Button>
-                <Button variant='default' onClick={() => navigate('/login')}  >
+                <Button variant='outline' size='lg' onClick={() => navigate('/login')}  >
                     Login
+                </Button>
+                <Button variant='default' size='lg' onClick={() => navigate('/register')}  >
+                    Register
                 </Button>
 
             </div>

@@ -30,7 +30,7 @@ const Login = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-gradient-to-b from-blue-500 to-white flex items-center">
+    <div className="bg-white flex items-center">
       <img src={registeration} alt="Image" className="ml-36 w-3/12 z-10" />
 
       <div style={{ height: 'calc(100vh - 5rem)' }} className="ml-72 flex justify-center items-center h-screen mb-14 ">
@@ -75,17 +75,17 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="mb-2 w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
+              className="mb-2 w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
             >
               Sign In
             </button>
           </form>
-          <Link to='/forget-password' className='text-blue-700 hover:underline' >Forget Password?</Link>
+          <Link to='/forget-password' className='text-green hover:underline' >Forget Password?</Link>
           <p className="mt-1">
             Don't have account?{" "}
             <Link
               to="/register"
-              className="underline text-blue-800"
+              className="underline text-green"
             >
               Register
             </Link>
