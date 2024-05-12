@@ -1,62 +1,57 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
 
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
   const navigate = useNavigate()
-
   ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
-  const [formData, setFormData] = useState('');
+  const [email, setEmail] = useState('');
 
   ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
 
 
   ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData(e.target.value);
-  }
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('formData', formData)
+    console.log('formData', email)
   }
+
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div style={{ height: 'calc(100vh - 5rem)' }} className="bg-gradient-to-b  bg-blue-500 flex justify-center items-center h-screen">
-      <div className="container bg-green-300 mt-16 mb-8 mx-auto p-8 pb-4 w-96 rounded-lg shadow-md border border-black">
-        <h1 className="text-center font-sans font-bold text-4xl">Forget Password</h1>
-        <form onSubmit={onSubmit} id="signin-form">
-          <div className="form-group mb-2">
-            <label htmlFor="email" className="block text-lg mb-2">
-              Email:
-            </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={formData}
-              onChange={onChange}
-              placeholder="Echo Sign"
-              className="w-full px-4 py-2 border border-gray-300 rounded"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
-          >
-            Submit
-          </button>
-        </form>
-        <p className="mt-2 flex justify-center w-full">
-          <button
-            onClick={() => navigate(-1)}
-            className="underline text-blue-800"
-          >
-            Go Back
-          </button>
-        </p>
-        <div id="message" className="text-center"></div>
+    <div className="bg-white flex justify-center items-center">
+      <div style={{ height: 'calc(100vh - 5rem)' }} className="flex justify-center items-start pt-16 mb-14 mt-6">
+        <div className="container mt-16 mb-8 mx-auto p-8 pb-4 w-[32rem] rounded-lg shadow-md border border-black">
+          <h1 className="text-center font-sans font-bold text-4xl mb-12 ">Forget Password</h1>
+          <form onSubmit={onSubmit} id="signin-form" className="flex flex-col gap-6" >
+            <div className="form-group mb-2">
+              <label htmlFor="usernameOrEmail" className="block text-lg mb-2">
+                Email/Username:
+              </label>
+              <input
+                type="text"
+                id="usernameOrEmail"
+                name="usernameOrEmail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Echo Sign"
+                className="w-full px-4 py-2 border border-gray-300 rounded"
+              />
+            </div>
+            <button
+              type="submit"
+              className="mb-2 w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
+            >
+              Submit
+            </button>
+          </form>
+          <p className="mt-4 text-center ">
+            <span onClick={() => navigate(-1)} className="underline text-muted-foreground hover:text-green cursor-pointer">
+              Go back
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
