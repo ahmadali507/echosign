@@ -2,11 +2,15 @@
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
+
+
 const TextBox = () => {
 
     /////////////////////////////////////////////////////// VARIABLES //////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////// STATES //////////////////////////////////////////////////////////
+
+    
     const [text, setText] = useState('');
     const [speaking, setSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -14,38 +18,58 @@ const TextBox = () => {
 
     /////////////////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////////////////////
     useEffect(() => {
-        const synth = window.speechSynthesis
+        const synth = window.speechSynthesis;
+
         const updateVoiceList = () => {
-            setVoices(synth.getVoices())
+            setVoices(synth.getVoices());
         };
-        synth.addEventListener('voiceschanged', updateVoiceList)
-        updateVoiceList()
 
-        return () => synth.removeEventListener('voiceschanged', updateVoiceList)
-    }, [])
+        synth.addEventListener('voiceschanged', updateVoiceList);
+        updateVoiceList();
 
-    const googleEnglishUKFemaleVoice = voices.find((voice) => voice.name === 'Google UK English Female')
-    const googleEnglishUKMaleVoice = voices.find((voice) => voice.name === 'Google UK English Male')
+        return () => {
+            synth.removeEventListener('voiceschanged', updateVoiceList);
+        };
+    }, []);
 
-    const availableVoices = [googleEnglishUKFemaleVoice, googleEnglishUKMaleVoice].filter((voice) => voice !== undefined) as SpeechSynthesisVoice[];
+    const Daniel = voices.find(
+        (voice) => voice.name === 'Daniel'
+    );
+    const Alex = voices.find(
+        (voice) => voice.name === 'Alex'
+    );
+    const Samantha = voices.find(
+        (voice) => voice.name === 'Samantha'
+    );
+    const Tessa = voices.find(
+        (voice) => voice.name === 'Tessa'
+    );
+
+    const availableVoices = [Alex, Daniel, Tessa, Samantha].filter(
+        (voice) => voice !== undefined
+    ) as SpeechSynthesisVoice[];
+
 
     /////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////////
     const speakText = () => {
-        if (speaking) return
+        if (speaking) {
+            return;
+        }
 
-        const synth = window.speechSynthesis
-        const utterance = new SpeechSynthesisUtterance(text)
-
+        const synth = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(text);
+        
         if (selectedVoice) {
-            utterance.voice = selectedVoice
+            utterance.voice = selectedVoice;
         }
 
         setSpeaking(true);
         utterance.onend = () => {
-            setSpeaking(false)
-        }
-        synth.speak(utterance)
-    }
+            setSpeaking(false);
+        };
+        synth.speak(utterance);
+    };
+
 
     /////////////////////////////////////////////////////// RENDER //////////////////////////////////////////////////////////
     return (
