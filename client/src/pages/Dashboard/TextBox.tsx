@@ -3,45 +3,39 @@ import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
 const TextBox = () => {
+
+    /////////////////////////////////////////////////////// VARIABLES //////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////// STATES //////////////////////////////////////////////////////////
     const [text, setText] = useState('');
     const [speaking, setSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
     const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
+    /////////////////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////////////////////
     useEffect(() => {
         const synth = window.speechSynthesis
-
         const updateVoiceList = () => {
             setVoices(synth.getVoices())
         };
-
         synth.addEventListener('voiceschanged', updateVoiceList)
         updateVoiceList()
 
-        return () => {
-            synth.removeEventListener('voiceschanged', updateVoiceList)
-        }
+        return () => synth.removeEventListener('voiceschanged', updateVoiceList)
     }, [])
 
-    const googleEnglishUKFemaleVoice = voices.find(
-        (voice) => voice.name === 'Google UK English Female'
-    )
-    const googleEnglishUKMaleVoice = voices.find(
-        (voice) => voice.name === 'Google UK English Male'
-    )
+    const googleEnglishUKFemaleVoice = voices.find((voice) => voice.name === 'Google UK English Female')
+    const googleEnglishUKMaleVoice = voices.find((voice) => voice.name === 'Google UK English Male')
 
-    const availableVoices = [googleEnglishUKFemaleVoice, googleEnglishUKMaleVoice].filter(
-        (voice) => voice !== undefined
-    ) as SpeechSynthesisVoice[];
+    const availableVoices = [googleEnglishUKFemaleVoice, googleEnglishUKMaleVoice].filter((voice) => voice !== undefined) as SpeechSynthesisVoice[];
 
+    /////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////////
     const speakText = () => {
-        if (speaking) {
-            return
-        }
+        if (speaking) return
 
         const synth = window.speechSynthesis
         const utterance = new SpeechSynthesisUtterance(text)
-        
+
         if (selectedVoice) {
             utterance.voice = selectedVoice
         }

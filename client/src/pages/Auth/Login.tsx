@@ -1,18 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Eye, EyeOff } from "lucide-react";
 import { registeration } from "@/assets";
 import { ChangeEvent, FormEvent, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/reducers/authSlice";
+import { User } from "@/interfaces";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const initialData = { usernameOrEmail: "", password: "", }
 
   ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
-  const [formData, setFormData] = useState({ usernameOrEmail: "", password: "", });
+  const [formData, setFormData] = useState(initialData);
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
-
 
   ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +29,24 @@ const Login = () => {
   }
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('formData', formData)
+
+    if (!formData?.usernameOrEmail) return toast.error('Username or email is required.')
+    if (!formData?.password) return toast.error('password is required.')
+
+    setLoading(true)
+    dispatch<any>(login(formData))
+      .then(({ payload }: { payload: User }) => {
+        if (payload) {
+          navigate('/dashboard')
+          setFormData(initialData)
+        }
+      })
+      .catch((err: any) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const toggleShowPassword = () => {
@@ -30,16 +55,17 @@ const Login = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-white flex items-center">
-      <img src={registeration} alt="Image" className="ml-36 w-3/12 z-10" />
-
-      <div style={{ height: 'calc(100vh - 5rem)' }} className="ml-72 flex justify-center items-center h-screen mb-14 ">
-        <div className="container bg-green-300 mt-16 mb-8 mx-auto p-8 pb-4 w-96 rounded-lg shadow-md border border-black">
-          <h1 className="text-center font-sans font-bold text-4xl">Login</h1>
-          <form onSubmit={onSubmit} id="signin-form">
+    <div className="bg-white grid grid-cols-2">
+      <div className="col-span-1 w-full h-full flex items-center ">
+        <img src={registeration} alt="Image" className="ml-20 w-8/12 z-10" />
+      </div>
+      <div style={{ height: 'calc(100vh - 5rem)' }} className="col-span-1 flex justify-end items-center h-screen mb-14 mt-6">
+        <div className="container mt-16 mb-8 mx-auto p-8 pb-4 w-[32rem] rounded-lg shadow-md border border-black">
+          <h1 className="text-center font-sans font-bold text-4xl mb-12 ">Login</h1>
+          <form onSubmit={onSubmit} id="signin-form" className="flex flex-col gap-6" >
             <div className="form-group mb-2">
               <label htmlFor="usernameOrEmail" className="block text-lg mb-2">
-                Email/Username:
+                Username or Email:
               </label>
               <input
                 type="text"
@@ -56,6 +82,7 @@ const Login = () => {
                 <label htmlFor="password" className="block text-lg mb-2">
                   Password
                 </label>
+                <Link to='/forget-password' className='text-muted-foreground hover:text-green hover:underline' >Forget Password?</Link>
               </div>
               <div className="relative">
                 <input
@@ -75,22 +102,18 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="mb-2 w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
+              disabled={loading}
+              className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/70 disabled:bg-green/50 disabled:cursor-not-allowed "
             >
-              Sign In
+              {loading ? 'Processing...' : 'Login'}
             </button>
           </form>
-          <Link to='/forget-password' className='text-green hover:underline' >Forget Password?</Link>
-          <p className="mt-1">
+          <p className="mt-4 text-center ">
             Don't have account?{" "}
-            <Link
-              to="/register"
-              className="underline text-green"
-            >
+            <Link to='/register' className="underline text-muted-foreground hover:text-green">
               Register
             </Link>
           </p>
-          <div id="message" className="text-center"></div>
         </div>
       </div>
     </div>

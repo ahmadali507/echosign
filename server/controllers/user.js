@@ -41,7 +41,7 @@ export const getProfile = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId)
-    res.status(200).json(user);
+    res.status(200).json({ result: user });
   } catch (error) {
     next(createError(res, 500, error.message));
   }
