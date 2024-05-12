@@ -1,137 +1,104 @@
-import { ChangeEvent, useEffect, useState } from "react"
-import {contact} from '@/assets'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { contact as contactImage } from '@/assets'
+import { Button } from '@/components/ui/button'
+import { contact } from '@/store/reducers/authSlice'
+import { ChangeEvent, FormEvent, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 
-const Contact = () => {
-  ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
+const Login = () => {
 
-  ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    companyName:"",
-    phone: "",
-    message:"",
-    isInquiry: false,
-    isTOFSAccepted: false,
-  });
+    ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
+    const dispatch = useDispatch()
+    const intiialData = { name: '', email: '', subject: '', message: '' }
 
-  ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
-  useEffect(() => {
-    console.log("formData", formData);
-  }, [formData]);
+    ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
+    const [formData, setFormData] = useState(intiialData)
+    const [loading, setLoading] = useState(false)
 
-  ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    console.log(`Setting ${name} to:`, value);
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+    ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
 
-  ///////////////////////////////////////////////////////// COMPONENTS ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
+    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(pre => ({ ...pre, [e.target.name]: e.target.value }))
+    }
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
-  ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
-  return (
-    <div className="bg-gradient-to-b from-blue-500 to-white min-h-screen flex flex-col items-center justify-center">
-    <img src={contact} alt="Contact" className="w-36 mb-8" />
-    <div className="container bg-green-300 p-8 pb-4 rounded-lg shadow-md border border-black">
-      <h1 className="text-center font-sans font-bold text-4xl mb-4">Contact Us</h1>
-      <div id="contactus-form">
-        <div className="form-group mb-4">
-                    <label htmlFor="name" className="block text-lg mb-1">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={onChange}
-                        placeholder="Your Name"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded"
-                    />
+        if (!formData?.name) return toast.error('Name is required.')
+        if (!formData?.email) return toast.error('Email is required.')
+        if (!formData?.subject) return toast.error('Subject is required.')
+        if (!formData?.message) return toast.error('Message is required.')
+
+        setLoading(true)
+        dispatch<any>(contact(formData))
+            .finally(() => {
+                setFormData(intiialData)
+                setLoading(false)
+            })
+    }
+
+
+    ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
+    return (
+        <div className="bg-white grid grid-cols-2">
+            <div className="col-span-1 w-full h-full flex items-center ">
+                <img src={contactImage} alt="Image" className="ml-20 w-8/12 z-10" />
+            </div>
+            <div style={{ height: 'calc(100vh - 5rem)' }} className="col-span-1 flex justify-end items-center h-screen mb-14 mt-6">
+                <div className="container mt-16 mb-8 mx-auto p-8 pb-4 w-[32rem] rounded-lg shadow-md border border-black">
+                    <h1 className="text-center font-sans font-bold text-4xl mb-12 ">Contact</h1>
+                    <form onSubmit={onSubmit} className="col-span-1 flex flex-col gap-4 ">
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                type="text"
+                                name='name'
+                                value={formData.name}
+                                onChange={onChange}
+                                placeholder='John Doe'
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="name">Email</label>
+                            <input
+                                type="text"
+                                name='email'
+                                value={formData.email}
+                                onChange={onChange}
+                                placeholder='johndoe@example.com'
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="name">Subject</label>
+                            <input
+                                type="text"
+                                name='subject'
+                                value={formData.subject}
+                                onChange={onChange}
+                                placeholder='Subject'
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="name">Message</label>
+                            <textarea
+                                rows={5}
+                                name='message'
+                                value={formData.message}
+                                onChange={onChange}
+                                placeholder='Place your message here'
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <Button className='bg-green' disabled={loading} >{loading ? 'Processing...' : 'Submit'}</Button>
+                    </form>
                 </div>
-                <div className="form-group mb-4">
-                    <label htmlFor="email" className="block text-lg mb-1">Email:</label>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={onChange}
-                        placeholder="Your Email"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded"
-                    />
-                </div>
-                <div className="form-group mb-4">
-                    <label htmlFor="companyName" className="block text-lg mb-1">Company Name:</label>
-                    <input
-                        type="text"
-                        id="companyName"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={onChange}
-                        placeholder="Company Name"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded"
-                    />
-                </div>
-                <div className="form-group mb-4">
-                    <label htmlFor="phone" className="block text-lg mb-1">Phone:</label>
-                    <input
-                        type="text"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={onChange}
-                        placeholder="Your Phone Number"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded"
-                    />
-                </div>
-                <div className="form-group mb-4 flex items-center">
-                    <label htmlFor="isInquiry" className="text-lg">Inquiry</label>
-                    <input type="checkbox" id="inquiry" name="inquiry" className="mr-2" />
-                </div>
-                <div className="form-group mb-4">
-                    <label htmlFor="message" className="block text-lg mb-1">Message:</label>
-                    <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        placeholder="Type your message here"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded"
-                    />
-                </div>
-                <div className="form-group mb-4 flex items-center">
-                    <label htmlFor="check" className="text-lg">
-                        I agree to the{" "}
-                        <span className="underline text-blue-800">
-                            <a href="#">Terms & Conditions</a>
-                        </span>
-                    </label>
-                    <input
-                        type="checkbox"
-                        id="check"
-                        name="check"
-                        required
-                        className="mr-2"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
-                >
-                    Send
-                </button>
             </div>
         </div>
-    </div>
-
-
-
-
-  );
+    );
 };
 
-export default Contact
+export default Login

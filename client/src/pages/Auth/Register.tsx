@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { User } from "@/interfaces";
 import { register } from "@/store/reducers/authSlice";
 import { Eye, EyeOff } from "lucide-react";
 import { registeration } from "@/assets";
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { User } from "@/interfaces";
+import toast from "react-hot-toast";
 
 const Register = () => {
 
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const initialData = { username: "", email: "", password: "", confirmPassword: "", isASL: false, isTOFSAccepted: false, }
 
   ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
-  const [formData, setFormData] = useState({ username: "", email: "", password: "", confirmPassword: "", isASL: false, isTOFSAccepted: false, });
+  const [formData, setFormData] = useState(initialData);
   const [showPassword, setShowPassword] = useState({ password: false, confirmPassword: false })
+  const [loading, setLoading] = useState(false)
 
   ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
 
@@ -26,18 +29,25 @@ const Register = () => {
   }
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(register(formData)).then(({ payload }: { payload: User }) => {
 
-      console.log('payload', payload)
+    if (!formData?.username) return toast.error('Username is required.')
+      if (!formData?.email) return toast.error('Email is required.')
+    if (!formData?.password) return toast.error('Password is required.')
+    if (formData?.password != formData?.confirmPassword) return toast.error('Password and Confirm Password should be same.')
 
-      if (payload) {
-        localStorage.setItem('email', formData.email)
-        navigate('/verify')
-      }
-
-    })
+    setLoading(true)
+    dispatch<any>(register(formData))
+      .then(({ payload }: { payload: User }) => {
+        if (payload) {
+          navigate('/dashboard')
+          setFormData({ username: "", email: "", password: "", confirmPassword: "", isASL: false, isTOFSAccepted: false, })
+        }
+      })
       .catch((err: any) => {
         console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
       })
 
   }
@@ -144,9 +154,10 @@ const Register = () => {
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
+              disabled={loading}
+              className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/70 disabled:bg-green/50 disabled:cursor-not-allowed "
             >
-              Register
+              {loading ? 'Processing...' : 'Register'}
             </button>
           </form>
           <p className="mt-4 text-center ">

@@ -12,4 +12,12 @@ export interface User {
 export interface Error {
   message: string;
   code: string;
-} 
+}
+
+export interface ContactData {
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+
+}

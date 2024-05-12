@@ -1,18 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Eye, EyeOff } from "lucide-react";
 import { registeration } from "@/assets";
 import { ChangeEvent, FormEvent, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/reducers/authSlice";
+import { User } from "@/interfaces";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const initialData = { usernameOrEmail: "", password: "", }
 
   ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
-  const [formData, setFormData] = useState({ usernameOrEmail: "", password: "", });
+  const [formData, setFormData] = useState(initialData);
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
-
 
   ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +29,24 @@ const Login = () => {
   }
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('formData', formData)
+
+    if (!formData?.usernameOrEmail) return toast.error('Username or email is required.')
+    if (!formData?.password) return toast.error('password is required.')
+
+    setLoading(true)
+    dispatch<any>(login(formData))
+      .then(({ payload }: { payload: User }) => {
+        if (payload) {
+          navigate('/dashboard')
+          setFormData(initialData)
+        }
+      })
+      .catch((err: any) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const toggleShowPassword = () => {
@@ -40,7 +65,7 @@ const Login = () => {
           <form onSubmit={onSubmit} id="signin-form" className="flex flex-col gap-6" >
             <div className="form-group mb-2">
               <label htmlFor="usernameOrEmail" className="block text-lg mb-2">
-                Email/Username:
+                Username or Email:
               </label>
               <input
                 type="text"
@@ -77,9 +102,10 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="mb-2 w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
+              disabled={loading}
+              className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/70 disabled:bg-green/50 disabled:cursor-not-allowed "
             >
-              Login
+              {loading ? 'Processing...' : 'Login'}
             </button>
           </form>
           <p className="mt-4 text-center ">
