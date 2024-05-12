@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { User } from "@/interfaces";
 import { register } from "@/store/reducers/authSlice";
 import { Eye, EyeOff } from "lucide-react";
@@ -47,7 +48,7 @@ const Register = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-gradient-to-b from-blue-500 to-white flex items-center">
+    <div className="bg-white flex items-center">
       <img src={registeration} alt="Image" className="ml-36 w-3/12 z-10"/>
 
       <div style={{ height: 'calc(100vh - 5rem)' }} className="ml-72 flex justify-center items-center h-screen mb-14 mt-6">
@@ -131,7 +132,7 @@ const Register = () => {
           <div className="form-group mb-2 flex items-center">
             <label htmlFor="check" className="text-lg">
               I agree to the{" "}
-              <span className="underline text-blue-800">
+              <span className="underline text-green">
                 <a href="#">Terms & Conditions</a>
               </span>
             </label>
@@ -139,12 +140,12 @@ const Register = () => {
               type="checkbox"
               id="check"
               name="check"
-              className="mr-2"
+              className="ml-2"
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
+            className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
           >
             Register
           </button>
@@ -153,7 +154,7 @@ const Register = () => {
           Already have an account?{" "}
           <Link
             to='/login'
-            className="underline text-blue-800"
+            className="underline text-green"
           >
             Login
           </Link>
