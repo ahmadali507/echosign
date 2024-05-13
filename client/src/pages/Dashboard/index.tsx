@@ -1,7 +1,7 @@
 import Audio from "./Audio"
 import Mimick from "./Mimick"
 import TextBox from "./TextBox"
-import WebCam from "./WebCam"
+import WebCamComponent from "./WebCam"
 
 const Dashboard = () => {
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
         <div className="w-full flex justify-center py-6 ">
             <div className="w-full flex flex-col gap-4 ">
 
-                <WebCam />
+                <WebCamComponent />
 
                 <div className="grid grid-cols-3 gap-4 ">
                     <div className="cols-span-1 min-h-[16rem] "><TextBox /></div>
