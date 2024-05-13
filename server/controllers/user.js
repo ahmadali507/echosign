@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import { createError } from "../utils/functions.js";
+import bcrypt from "bcryptjs";
 
 export const getUsers = async (req, res, next) => {
   try {
@@ -61,10 +62,30 @@ export const updateProfile = async (req, res, next) => {
 
     const result = await User.findByIdAndUpdate(
       req.user._id,
-      { $set: { ...req.body } },
+      { $set: { username, email } },
       { new: true }
     );
     res.status(200).json(result);
+  } catch (error) {
+    next(createError(res, 500, error.message));
+  }
+};
+export const updatePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const userId = req.user._id
+
+    const findedUser = await User.findById(userId)
+    if (!findedUser) return res.status(400).json({ message: 'User not found.' })
+
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, findedUser.password);
+    if (!isPasswordCorrect) return next(createError(res, 401, "Wrong Credentials"));
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    const result = await User.findByIdAndUpdate(req.user._id, { $set: { password: hashedPassword } }, { new: true });
+    res.status(200).json({ result, message: 'Password updated successfully.' });
   } catch (error) {
     next(createError(res, 500, error.message));
   }
