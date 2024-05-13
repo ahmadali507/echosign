@@ -1,25 +1,54 @@
-import { Camera } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { useStateContext } from '@/context/useStateContext'
+import { Camera, CameraIcon } from 'lucide-react'
 import { useState } from 'react'
 import Webcam from 'react-webcam'
 
 
 const WebCamComponent = () => {
 
+    /////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
+    const { setCapturedImage } = useStateContext()
+    /////////////////////////////////////////////// STATES ////////////////////////////////////////////////
     const [enableCamera, setEnableCamera] = useState(false)
 
+    /////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
 
 
     return (
-        <div onClick={() => setEnableCamera(true)} className='w-full bg-gray-300 rounded-lg h-[24rem] flex flex-col justify-center items-center ' >
+        <div className='relative w-full bg-gray-300 rounded-lg h-[24rem] overflow-hidden ' >
             {
                 enableCamera
                     ?
-                    <Webcam className='w-full h-full ' />
+                    <Webcam
+                        audio={false}
+                        screenshotFormat="image/jpeg"
+                        className='w-full h-full relative '
+                    >
+                        {({ getScreenshot }) => (
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Button
+                                        variant='outline'
+                                        onClick={() => {
+                                            const imageSrc = getScreenshot()
+                                            setCapturedImage(imageSrc)
+                                        }}
+                                        className='absolute top-4 right-4 '
+                                    >
+                                        <CameraIcon />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Capture</TooltipContent>
+                            </Tooltip>
+                        )}
+                    </Webcam>
                     :
-                    <>
+                    <div onClick={() => setEnableCamera(true)} className='cursor-pointer w-full h-full flex flex-col justify-center items-center ' >
                         <Camera className='w-24 h-24 text-gray-600 ' />
                         <span className="text-xl">Enable Camera</span>
-                    </>
+                    </div>
             }
 
         </div>

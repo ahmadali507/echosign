@@ -1,17 +1,20 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 interface StateContextType {
+    capturedImage: string,
+    setCapturedImage: any
 }
 
 const StateContext = createContext<StateContextType | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
+    const [capturedImage, setCapturedImage] = useState('')
 
     return (
         <StateContext.Provider
             value={{
-                
+                capturedImage, setCapturedImage
             }}
         >
             {children}

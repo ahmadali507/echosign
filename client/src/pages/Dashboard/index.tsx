@@ -14,8 +14,8 @@ const Dashboard = () => {
                 <WebCamComponent />
 
                 <div className="grid grid-cols-3 gap-4 ">
-                    <div className="cols-span-1 min-h-[16rem] "><TextBox /></div>
                     <div className="cols-span-1 min-h-[16rem] "><Mimick /></div>
+                    <div className="cols-span-1 min-h-[16rem] "><TextBox /></div>
                     <div className="cols-span-1 min-h-[16rem] "><Audio /></div>
                 </div>
 

@@ -46,27 +46,32 @@ const Footer = () => {
                         <div className="flex justify-start items-center gap-4 w-full ">
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://github.com' target='new' ><Github className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://github.com' target='new' ><Github className=' ' /></Link>
+                                </TooltipTrigger>
                                 <TooltipContent>Github</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://linkedin.com' target='new' ><Linkedin className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://linkedin.com' target='new' ><Linkedin className=' ' /></Link>
+                                </TooltipTrigger>
                                 <TooltipContent>Linkedin</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://twitter.com' target='new' ><Twitter className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://twitter.com' target='new' ><Twitter className=' ' /></Link>
+                                </TooltipTrigger>
                                 <TooltipContent>Twitter</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://instagram.com' target='new' ><Instagram className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://instagram.com' target='new' ><Instagram className=' ' /></Link>
+                                </TooltipTrigger>
                                 <TooltipContent>Instagram</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://mail.google.com/' target='new' ><Mail className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://mail.google.com/' target='new' ><Mail className=' ' /></Link>
+                                </TooltipTrigger>
                                 <TooltipContent>Mail</TooltipContent>
                             </Tooltip>
                         </div>
