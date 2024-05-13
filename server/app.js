@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import generalRoutes from "./routes/general.js";
 
 dotenv.config();
 const app = express();
@@ -29,6 +30,7 @@ app.use("/uploads", express.static(join(__dirname, "uploads")));
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/general", generalRoutes);
 
 app.use((err, req, res, next) => {
   const messae = err.messae || "Something went wrong.";
