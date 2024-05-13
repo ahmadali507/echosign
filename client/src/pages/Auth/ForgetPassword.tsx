@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +21,7 @@ const ForgetPassword = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-white flex justify-center items-center">
+    <div className="flex justify-center items-center">
       <div style={{ height: 'calc(100vh - 5rem)' }} className="flex justify-center items-start pt-16 mb-14 mt-6">
         <div className="container mt-16 mb-8 mx-auto p-8 pb-4 w-[32rem] rounded-lg shadow-md border border-black">
           <h1 className="text-center font-sans font-bold text-4xl mb-12 ">Forget Password</h1>
@@ -39,12 +40,7 @@ const ForgetPassword = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded"
               />
             </div>
-            <button
-              type="submit"
-              className="mb-2 w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/90"
-            >
-              Submit
-            </button>
+            <Button type="submit" className="font-bold ">Submit</Button>
           </form>
           <p className="mt-4 text-center ">
             <span onClick={() => navigate(-1)} className="underline text-muted-foreground hover:text-green cursor-pointer">

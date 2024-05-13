@@ -1,4 +1,5 @@
-import  { ChangeEvent, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const Rpass = () => {
   ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
@@ -51,8 +52,8 @@ const Rpass = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-gradient-to-b from-blue-500 to-white flex justify-center items-center h-screen">
-      <div className="fixed top-0 left-0 w-full h-14 bg-white border border-black z-10">
+    <div className="flex justify-center items-center h-screen">
+      <div className="fixed top-0 left-0 w-full h-14 border border-black z-10">
         <img
           src="src/EchoSign.ico"
           alt="Image"
@@ -75,13 +76,12 @@ const Rpass = () => {
               </label>
               <PasswordToggle id="confirmPassword" />
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
+              className="font-bold "
             >
-              Reset
-            </button>
-          </form>
+              {'Reset'}
+            </Button>          </form>
           <div id="message" className="text-center"></div>
         </div>
       </div>

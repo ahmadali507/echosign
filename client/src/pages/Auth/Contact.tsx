@@ -41,7 +41,7 @@ const Login = () => {
 
     ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
     return (
-        <div className="bg-white grid grid-cols-2">
+        <div className="grid grid-cols-2">
             <div className="col-span-1 w-full h-full flex items-center ">
                 <img src={contactImage} alt="Image" className="ml-20 w-8/12 z-10" />
             </div>

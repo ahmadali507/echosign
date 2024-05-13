@@ -1,7 +1,7 @@
 import { About1, About2, About3 } from '@/assets'
 import React from 'react'
 
-const AboutAI = () => {
+const About = () => {
     return (
         <div className="min-h-screen flex flex-col justify-start items-center py-12 pb-32 ">
 
@@ -47,4 +47,4 @@ const AboutAI = () => {
     )
 }
 
-export default AboutAI
+export default About

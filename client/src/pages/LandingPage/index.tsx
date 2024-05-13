@@ -1,5 +1,5 @@
 import HowItWork from './HowItWork'
-import AboutAI from './About'
+import About from './About'
 import Header from './Header'
 import Contact from './Contact'
 
@@ -8,9 +8,9 @@ const LandingPage = () => {
     ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
 
     return (
-        <div className="flex flex-col w-full bg-white">
+        <div className="flex flex-col w-full bg-inherit">
             <Header />
-            <AboutAI />
+            <About />
             <HowItWork />
             <Contact />
         </div>

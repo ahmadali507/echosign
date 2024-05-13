@@ -10,8 +10,12 @@ const Authenticated = ({ children }: { children: ReactNode }) => {
     const { user, isLoading } = useSelector((state: RootState) => state.auth)
     const navigate = useNavigate()
 
-    if (isLoading) {
-        return <h1>Loading...</h1>
+    if (isLoading && !user) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                <h1 className='text-3xl font-semibold' >Loading...</h1>
+            </div>
+        )
     }
     else if (user) {
         return children

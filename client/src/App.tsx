@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import { ChangePassword, ForgetPassword, LandingPage, Login, Register, ResetPassword, TermsAndConditions, Contact, Dashboard } from "./pages";
+import { ForgetPassword, LandingPage, Login, Register, TermsAndConditions, Contact, Dashboard, Profile, About } from "./pages";
 import DefaultLayout from "./wrappers/DefaultLayout";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,6 @@ import NotFound from "./components/NotFound";
 
 function App() {
 
-  // TODO: check working of toast
   const dispatch = useDispatch()
   const { user } = useSelector((state: RootState) => state.auth)
 
@@ -25,6 +24,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Authenticated><Dashboard /></Authenticated>} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Authenticated><Profile /></Authenticated>} />
         <Route path="/contactus" element={<Contact />} />
 
         <Route path="/register" element={<Register />} />

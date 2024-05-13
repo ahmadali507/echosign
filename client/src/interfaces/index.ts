@@ -3,10 +3,11 @@ export interface User {
   id?: string;
   username: string,
   email: string,
+  photoUrl?: string;
   password: string,
-  confirmPassword: string,
-  isASL: boolean,
-  isTOFSAccepted: boolean,
+  confirmPassword?: string,
+  isASL?: boolean,
+  isTOFSAccepted?: boolean,
 }
 
 export interface Error {

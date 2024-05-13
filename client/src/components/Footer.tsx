@@ -36,7 +36,7 @@ const Footer = () => {
         <div className='flex flex-col gap-24 border-t mt-28 pt-16 ' >
             <div className="grid grid-cols-2 gap-36 w-full ">
                 <div className="col-span-1 w-full flex flex-col gap-4">
-                    <img src={Logo} alt="Image" className="w-36 z-10" />
+                    <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
                     <h1>At EchoSign, we are driven by a singular mission: to empower individuals with special needs through innovative technology. We believe that effective communication is a fundamental right for all, and we're committed to breaking down barriers to ensure that everyone can express themselves freely.</h1>
                 </div>
                 <div className="col-span-1 flex flex-col gap-10 w-full">
@@ -46,27 +46,27 @@ const Footer = () => {
                         <div className="flex justify-start items-center gap-4 w-full ">
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://www.github.com' target='new' ><Github className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://github.com' target='new' ><Github className=' ' /></Link></TooltipTrigger>
                                 <TooltipContent>Github</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://www.github.com' target='new' ><Linkedin className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://linkedin.com' target='new' ><Linkedin className=' ' /></Link></TooltipTrigger>
                                 <TooltipContent>Linkedin</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://www.github.com' target='new' ><Twitter className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://twitter.com' target='new' ><Twitter className=' ' /></Link></TooltipTrigger>
                                 <TooltipContent>Twitter</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://www.github.com' target='new' ><Instagram className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://instagram.com' target='new' ><Instagram className=' ' /></Link></TooltipTrigger>
                                 <TooltipContent>Instagram</TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Link to='https://www.github.com' target='new' ><Mail className=' ' /></Link></TooltipTrigger>
+                                    <Link to='https://mail.google.com/' target='new' ><Mail className=' ' /></Link></TooltipTrigger>
                                 <TooltipContent>Mail</TooltipContent>
                             </Tooltip>
                         </div>
@@ -93,13 +93,12 @@ const Footer = () => {
                 <div className="flex justify-center gap-4 text-black text-sm font-bold">
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Help</Link>
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>FAQs</Link>
-                    <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Reviews</Link>
-                    <Link to='/' className='hover:text-green hover:underline cursor-pointer'>About Us</Link>
+                    <Link to='/about' className='hover:text-green hover:underline cursor-pointer'>About Us</Link>
                     <Link to='/contactus' className='hover:text-green hover:underline cursor-pointer'>Contact Us</Link>
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Privacy Policy </Link>
                     <Link to='/terms-and-conditions' className='hover:text-green hover:underline cursor-pointer'>Terms and Conditions </Link>
                 </div>
-                <div className='flex justify-center items-center bg-white h-fit w-full mt-4'>
+                <div className='flex justify-center items-center h-fit w-full mt-4'>
                     Copyright &copy; 2024 Echosign
                 </div>
 

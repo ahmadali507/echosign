@@ -44,6 +44,38 @@ export const getProfile = createAsyncThunk<User>('auth/login', async () => {
     throw error as string;
   }
 });
+export const updateProfile = createAsyncThunk<User, User>('auth/updateProfile', async (formData) => {
+  try {
+    const { data } = await api.updateProfile(formData);
+    toast.success(data?.message)
+    console.log('data', data)
+    return data.result as User
+  } catch (error) {
+    toast.error('Something went wrong!')
+    throw error as string;
+  }
+});
+export const updatePassword = createAsyncThunk<null, { oldPassword: string, newPassword: string }>('auth/updateProfile', async (formData) => {
+  try {
+    const { data } = await api.updatePassword(formData);
+    toast.success(data?.message)
+    return null
+  } catch (error) {
+    toast.error('Something went wrong!')
+    throw error as string;
+  }
+});
+export const uploadImage = createAsyncThunk<User, FormData>('auth/updateProfile', async (formData) => {
+  try {
+    const { data } = await api.uploadImage(formData);
+    toast.success(data?.message)
+    console.log('data', data)
+    return data?.result as User
+  } catch (error) {
+    toast.error('Something went wrong!')
+    throw error as string;
+  }
+});
 export const subscribe = createAsyncThunk<null, string>('auth/subscribe', async (email) => {
   try {
     const { data } = await api.subscribe(email);
@@ -98,6 +130,9 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = { message: action.error.message || '', code: action.error.code || '' };
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
   },
 });

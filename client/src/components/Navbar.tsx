@@ -27,7 +27,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="flex justify-between items-center h-[6rem] bg-white w-full ">
+        <div className="flex justify-between items-center h-[6rem] w-full ">
 
             <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
 
@@ -40,7 +40,7 @@ const Navbar = () => {
                                 <div className='flex justify-end items-center gap-2 ' >
                                     <span className='text-xl font-medium text-muted-foreground ' >{user?.username}</span>
                                     <Avatar>
-                                        <AvatarImage src={''} />
+                                        <AvatarImage src={user?.photoUrl} className='object-cover' />
                                         <AvatarFallback className='capitalize' >{user?.username?.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                 </div>
@@ -48,7 +48,7 @@ const Navbar = () => {
                             <DropdownMenuContent>
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => navigate('/profile')} >Profile</DropdownMenuItem>
                                 <DropdownMenuItem onClick={onLogout} >Logout</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

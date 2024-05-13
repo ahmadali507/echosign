@@ -3,7 +3,7 @@ function TermsAndConditions() {
 
 
     return (
-        <div className="w-full bg-white">
+        <div className="w-full">
 
             <div className='ml-8 mt-10 text-7xl text-green-300 font-bold text-center'>
                 <h1 className="">Terms and Conditions </h1>

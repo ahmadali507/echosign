@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { User } from "@/interfaces";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 
 const Register = () => {
 
@@ -58,7 +59,7 @@ const Register = () => {
 
   ///////////////////////////////////////////////////////// RENDER ///////////////////////////////////////////////////////////
   return (
-    <div className="bg-white grid grid-cols-2">
+    <div className="grid grid-cols-2">
       <div className="col-span-1 w-full h-full flex items-center ">
         <img src={registeration} alt="Image" className="ml-20 w-8/12 z-10" />
       </div>
@@ -152,13 +153,13 @@ const Register = () => {
                 />
               </div>
             </div>
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="w-full px-4 py-2 bg-green text-white font-bold rounded cursor-pointer hover:bg-green/70 disabled:bg-green/50 disabled:cursor-not-allowed "
+              className="font-bold "
             >
               {loading ? 'Processing...' : 'Register'}
-            </button>
+            </Button>
           </form>
           <p className="mt-4 text-center ">
             Already have an account?{" "}

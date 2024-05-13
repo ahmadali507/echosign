@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
+import { Button } from "@/components/ui/button";
 
 const VerifyEmail = () => {
 
@@ -45,12 +46,7 @@ const VerifyEmail = () => {
                             )}
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer hover:bg-blue-700"
-                    >
-                        Submit
-                    </button>
+                    <Button type="submit" className="font-bold ">Submit</Button>
                 </form>
                 <p className="mt-2 flex justify-center w-full">
                     <button

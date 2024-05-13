@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Toaster />
           <App />
         </TooltipProvider>
-      </BrowserRouter>,
-    </ContextProvider>,
-  </Provider>,
+      </BrowserRouter>
+    </ContextProvider>
+  </Provider>
 )
