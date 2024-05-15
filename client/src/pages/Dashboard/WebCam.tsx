@@ -17,7 +17,7 @@ const WebCamComponent = () => {
                     audio={false}
                     screenshotFormat="image/jpeg"
                     className='w-full h-full relative'
-                    mirrored={false}
+                    mirrored={true}
                 >
                     {({ getScreenshot }) => (
                         <Tooltip>

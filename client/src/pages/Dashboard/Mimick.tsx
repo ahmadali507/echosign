@@ -5,6 +5,7 @@ import toast from "react-hot-toast"
 
 const Mimick = () => {
 
+    const { setOutputGesture } = useStateContext(); 
     const { capturedImage } = useStateContext()
 
     const onExport = async () => {
@@ -12,15 +13,28 @@ const Mimick = () => {
         if (!capturedImage) return toast.error('No image captured')
 
         // Create FormData object
-        const requestUrl = "http://127.0.0.1:8000/detect";
+    const blob = await fetch(capturedImage).then((res) => res.blob());
 
-        try {
-            const response = await axios.post(requestUrl, capturedImage, {
-                headers: {
-                    'Content-Type': 'image/jpeg'
-                }
-            });
+    // Create File object from Blob
+    const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+
+    // Create FormData object
+    const formData = new FormData();
+    formData.append("image", file);
+        console.log(formData); 
+
+    const requestUrl = "http://127.0.0.1:8000/detect";
+
+    try {
+      const response = await axios.post(requestUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+            setOutputGesture(response.data.gesture); 
             console.log('Gesture detected:', response.data);
+            
+
         } catch (error) {
             console.error('Error detecting gesture:', error);
         }

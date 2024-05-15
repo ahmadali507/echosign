@@ -40,6 +40,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
+  
   res.status(200).send("App is Working");
 });
 

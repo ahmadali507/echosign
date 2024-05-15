@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
+import { useStateContext } from '@/context/useStateContext';
 import { useState, useEffect } from 'react';
 
 const TextBox = () => {
+    const {outputGesture} = useStateContext(); 
     const [text, setText] = useState('');
     const [speaking, setSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -70,7 +72,7 @@ const TextBox = () => {
                 className="w-full h-full bg-gray-100 rounded-lg p-4 text-black text-lg resize-none"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Type text here..."
+                placeholder={outputGesture}
                 rows={6}
                 cols={50}
             />
