@@ -99,7 +99,7 @@ const Footer = () => {
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Help</Link>
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>FAQs</Link>
                     <Link to='/about' className='hover:text-green hover:underline cursor-pointer'>About Us</Link>
-                    <Link to='/contactus' className='hover:text-green hover:underline cursor-pointer'>Contact Us</Link>
+                    <Link to='/contact' className='hover:text-green hover:underline cursor-pointer'>Contact Us</Link>
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Privacy Policy </Link>
                     <Link to='/terms-and-conditions' className='hover:text-green hover:underline cursor-pointer'>Terms and Conditions </Link>
                 </div>

@@ -8,6 +8,7 @@ import { login } from "@/store/reducers/authSlice";
 import { User } from "@/interfaces";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
+import { setUserSlice } from "@/store/reducers/userSlice";
 
 const Login = () => {
 
@@ -38,6 +39,7 @@ const Login = () => {
     dispatch<any>(login(formData))
       .then(({ payload }: { payload: User }) => {
         if (payload) {
+          dispatch(setUserSlice(payload))
           navigate('/dashboard')
           setFormData(initialData)
         }

@@ -9,19 +9,21 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import Cookies from 'js-cookie'
 import { resetAuthState } from '@/store/reducers/authSlice'
 import toast from 'react-hot-toast'
+import { resetUserState } from '@/store/reducers/userSlice'
 
 const Navbar = () => {
 
     ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { user } = useSelector((state: RootState) => state.auth)
+    const { loggedUser } = useSelector((state: RootState) => state.user)
 
     ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
     const onLogout = () => {
         navigate('/')
         Cookies.remove('echo.token')
         dispatch(resetAuthState())
+        dispatch(resetUserState())
         toast.success('Logout successfully.')
     }
 
@@ -31,43 +33,63 @@ const Navbar = () => {
 
             <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
 
-            {
-                user
-                    ?
-                    <>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className='px-2 py-0.5 '   >
-                                <div className='flex justify-end items-center gap-2 ' >
-                                    <span className='text-xl font-medium text-muted-foreground ' >{user?.username}</span>
-                                    <Avatar>
-                                        <AvatarImage src={user?.photoUrl} className='object-cover' />
-                                        <AvatarFallback className='capitalize' >{user?.username?.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={() => navigate('/profile')} >Profile</DropdownMenuItem>
-                                <DropdownMenuItem onClick={onLogout} >Logout</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
 
-                    </>
-                    :
-                    <div className='flex justify-start gap-4' >
-                        <Button variant='outline' size='lg' onClick={() => navigate('/register')}  >
-                            Register
-                        </Button>
-                        <Button variant='default' size='lg' onClick={() => navigate('/login')}  >
-                            Login
-                        </Button>
-                    </div>
-            }
+            <ul className="flex justify-center items-center gap-6">
+                <li className='hover:text-green hover:underline '  >
+                    <Link to='/users' >Gesture Recognition</Link>
+                </li>
+                <li className='hover:text-green hover:underline '  >
+                    <Link to='/users' >Text to voice</Link>
+                </li>
+                <li className='hover:text-green hover:underline '  >
+                    <Link to='/users' >Users</Link>
+                </li>
+                <li className='hover:text-green hover:underline '  >
+                    <Link to='/about' >About</Link>
+                </li>
+                <li className='hover:text-green hover:underline '  >
+                    <Link to='/contact' >Contact</Link>
+                </li>
+            </ul>
+            <div className="flex justify-end items-center gap-8">
+
+                <>
+                    {
+                        loggedUser
+                            ?
+                            <>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className='px-2 py-0.5 '   >
+                                        <div className='flex justify-end items-center gap-2 ' >
+                                            <span className='text-xl font-medium text-muted-foreground ' >{loggedUser?.username}</span>
+                                            <Avatar>
+                                                <AvatarImage src={loggedUser?.photoUrl} className='object-cover' />
+                                                <AvatarFallback className='capitalize' >{loggedUser?.username?.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                        </div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem onClick={() => navigate('/profile')} >Profile</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={onLogout} >Logout</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+
+                            </>
+                            :
+                            <div className='flex justify-start gap-4' >
+                                <Button variant='outline' size='lg' onClick={() => navigate('/register')}  >
+                                    Register
+                                </Button>
+                                <Button variant='default' size='lg' onClick={() => navigate('/login')}  >
+                                    Login
+                                </Button>
+                            </div>
+                    }
+                </>
+            </div>
         </div>
-
-
-
     )
 }
 

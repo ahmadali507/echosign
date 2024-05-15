@@ -4,30 +4,32 @@ import bcrypt from "bcryptjs";
 
 export const getUsers = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 10 } = req.query;
+    const { page, pageSize, enablePagination = false } = req.query;
 
-    const pageNumber = parseInt(page, 10) || 1;
-    const size = parseInt(pageSize, 10) || 10;
-    const skip = (pageNumber - 1) * size;
+    let query = User.find({ _id: { $ne: req.user._id } });
 
-    // const result = await User.find({ _id: { $ne: req.user._id } })
-    const result = await User.find({})
-      .skip(skip)
-      .limit(size)
-      .exec();
+    let resultPromise;
+    if (Boolean(enablePagination)) {
+      const pageNumber = parseInt(page, 10) || 1;
+      const size = parseInt(pageSize, 10) || 10;
+      const skip = (pageNumber - 1) * size;
 
-    const totalCount = await User.countDocuments({});
+      query = query.skip(skip).limit(size);
+      resultPromise = query.exec();
+    } else {
+      resultPromise = query.exec();
+    }
 
-    const response = {
-      result,
-      count: totalCount
-    };
+    const [result, totalCount] = await Promise.all([resultPromise, Boolean(enablePagination) ? User.countDocuments({ _id: { $ne: req.user._id } }) : User.countDocuments({}),]);
+
+    const response = { result, count: totalCount, };
 
     res.status(200).json(response);
   } catch (error) {
     next(createError(500, error.message));
   }
 };
+
 
 export const getUser = async (req, res, next) => {
   try {
@@ -49,20 +51,20 @@ export const getProfile = async (req, res, next) => {
 };
 export const updateProfile = async (req, res, next) => {
   try {
-    const { username, email } = req.body;
+    // const { username, email } = req.body;
 
-    const loggedInUser = await User.findById(req.user._id);
+    // const loggedInUser = await User.findById(req.user._id);
 
-    const isUsernameExist = await User.findOne({ username });
-    if (isUsernameExist && username != loggedInUser.username)
-      return next(createError(res, 400, "Username already exist."));
-    const isEmailExist = await User.findOne({ email });
-    if (isEmailExist && email != loggedInUser.email)
-      return next(createError(res, 400, "Email already exist."));
+    // const isUsernameExist = await User.findOne({ username });
+    // if (isUsernameExist && username != loggedInUser.username)
+    //   return next(createError(res, 400, "Username already exist."));
+    // const isEmailExist = await User.findOne({ email });
+    // if (isEmailExist && email != loggedInUser.email)
+    //   return next(createError(res, 400, "Email already exist."));
 
     const result = await User.findByIdAndUpdate(
       req.user._id,
-      { $set: { username, email } },
+      { $set: { ...req.body } },
       { new: true }
     );
     res.status(200).json(result);

@@ -11,7 +11,6 @@ const Mimick = () => {
 
         if (!capturedImage) return toast.error('No image captured')
 
-        // Create FormData object
         const requestUrl = "http://127.0.0.1:8000/detect";
 
         try {

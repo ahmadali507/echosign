@@ -7,17 +7,17 @@ import { useNavigate } from 'react-router-dom'
 const Authenticated = ({ children }: { children: ReactNode }) => {
 
     ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
-    const { user, isLoading } = useSelector((state: RootState) => state.auth)
+    const { loggedUser, isLoading } = useSelector((state: RootState) => state.user)
     const navigate = useNavigate()
 
-    if (isLoading && !user) {
+    if (isLoading && !loggedUser) {
         return (
             <div className="w-full h-full flex justify-center items-center">
                 <h1 className='text-3xl font-semibold' >Loading...</h1>
             </div>
         )
     }
-    else if (user) {
+    else if (loggedUser) {
         return children
     }
     else {

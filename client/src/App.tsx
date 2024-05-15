@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import { ForgetPassword, LandingPage, Login, Register, TermsAndConditions, Contact, Dashboard, Profile, About } from "./pages";
+import { ForgetPassword, LandingPage, Login, Register, TermsAndConditions, Contact, Dashboard, Profile, About, Users } from "./pages";
 import DefaultLayout from "./wrappers/DefaultLayout";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store/store";
-import { getProfile } from "./store/reducers/authSlice";
+import { getProfile } from "./store/reducers/userSlice";
 import Authenticated from "./wrappers/Authenticated";
 import NotFound from "./components/NotFound";
 
 function App() {
 
   const dispatch = useDispatch()
-  const { user } = useSelector((state: RootState) => state.auth)
+  const { loggedUser } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    if (!user) dispatch<any>(getProfile())
-  }, [user, dispatch])
+    if (!loggedUser) dispatch<any>(getProfile())
+  }, [loggedUser, dispatch])
 
   return (
     <DefaultLayout>
@@ -26,7 +26,9 @@ function App() {
         <Route path="/dashboard" element={<Authenticated><Dashboard /></Authenticated>} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Authenticated><Profile /></Authenticated>} />
-        <Route path="/contactus" element={<Contact />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/users" element={<Authenticated><Users /></Authenticated>} />
+        <Route path="/user/:userId" element={<Profile />} />
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

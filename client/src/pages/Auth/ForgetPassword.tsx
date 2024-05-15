@@ -15,7 +15,6 @@ const ForgetPassword = () => {
   ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('formData', email)
   }
 
 
