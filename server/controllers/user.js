@@ -87,6 +87,7 @@ export const updatePassword = async (req, res, next) => {
     const result = await User.findByIdAndUpdate(req.user._id, { $set: { password: hashedPassword } }, { new: true });
     res.status(200).json({ result, message: 'Password updated successfully.' });
   } catch (error) {
+    console.log('error', error)
     next(createError(res, 500, error.message));
   }
 };

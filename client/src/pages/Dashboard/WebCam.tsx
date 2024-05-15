@@ -4,16 +4,18 @@ import { useStateContext } from '@/context/useStateContext';
 import { Camera, CameraIcon } from 'lucide-react';
 import { useState } from 'react';
 import Webcam from 'react-webcam';
-import axios from 'axios';
 
 const WebCamComponent = () => {
     const { setCapturedImage } = useStateContext();
     const [enableCamera, setEnableCamera] = useState(false);
 
+<<<<<<< HEAD
     const captureImage = async (getScreenshot) => {
         const imageSrc = getScreenshot();
         setCapturedImage(imageSrc);
     };
+=======
+>>>>>>> c2a5513af0d330ee38cb0c5935a202254515ad36
 
     return (
         <div className='relative w-full bg-gray-300 rounded-lg h-[24rem] overflow-hidden'>
@@ -22,14 +24,21 @@ const WebCamComponent = () => {
                     audio={false}
                     screenshotFormat="image/jpeg"
                     className='w-full h-full relative'
+<<<<<<< HEAD
                     mirrored = {false}
+=======
+                    mirrored={false}
+>>>>>>> c2a5513af0d330ee38cb0c5935a202254515ad36
                 >
                     {({ getScreenshot }) => (
                         <Tooltip>
                             <TooltipTrigger>
                                 <Button
                                     variant='outline'
-                                    onClick={() => captureImage(getScreenshot)}
+                                    onClick={() => {
+                                        const imageSrc = getScreenshot();
+                                        setCapturedImage(imageSrc);
+                                    }}
                                     className='absolute top-4 right-4'
                                 >
                                     <CameraIcon />
