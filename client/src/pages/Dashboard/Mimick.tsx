@@ -37,6 +37,7 @@ const Mimick = () => {
 
         } catch (error) {
             console.error('Error detecting gesture:', error);
+            setOutputGesture("NO such gesture is registered for detection uptill now.")
         }
     }
 
