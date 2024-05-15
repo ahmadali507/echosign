@@ -1,18 +1,35 @@
 import { Button } from "@/components/ui/button"
 import { useStateContext } from "@/context/useStateContext"
+import axios from "axios"
+import toast from "react-hot-toast"
 
 const Mimick = () => {
 
     const { capturedImage } = useStateContext()
 
-    const onExport = ()=>{
-        
+    const onExport = async () => {
+
+        if (!capturedImage) return toast.error('No image captured')
+
+        // Create FormData object
+        const requestUrl = "http://127.0.0.1:8000/detect";
+
+        try {
+            const response = await axios.post(requestUrl, capturedImage, {
+                headers: {
+                    'Content-Type': 'image/jpeg'
+                }
+            });
+            console.log('Gesture detected:', response.data);
+        } catch (error) {
+            console.error('Error detecting gesture:', error);
+        }
     }
 
     return (
         <div className='w-full h-full rounded-lg flex flex-col gap-1 ' >
 
-            <h2 className='text-xl font-medium ' >Mimick</h2>
+            <h2 className='text-xl font-medium ' >Captured</h2>
 
             <div className="w-full h-full bg-gray-100 rounded-lg overflow-hidden ">
                 {
@@ -26,7 +43,7 @@ const Mimick = () => {
                 }
             </div>
 
-            <Button onClick={onExport} >Send</Button>
+            <Button onClick={onExport} disabled={!capturedImage} >Send</Button>
 
         </div>
     )
