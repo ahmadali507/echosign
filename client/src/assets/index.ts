@@ -1,4 +1,4 @@
-export { default as Logo } from './logo.png'
+export { default as Logo } from './EchoSign.png'
 export { default as recording } from './undraw_recording_re_5xyq.svg'
 export { default as selfie } from './undraw_selfie_re_h9um.svg'
 export { default as video } from './undraw_video_files_fu10.svg'

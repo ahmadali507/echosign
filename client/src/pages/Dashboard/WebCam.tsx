@@ -10,6 +10,11 @@ const WebCamComponent = () => {
     const [enableCamera, setEnableCamera] = useState(false);
 
 
+    const captureImage = async (getScreenshot) => {
+        const imageSrc = getScreenshot();
+        setCapturedImage(imageSrc);
+    };
+
     return (
         <div className='relative w-full bg-gray-300 rounded-lg h-[24rem] overflow-hidden'>
             {enableCamera ? (
@@ -17,7 +22,7 @@ const WebCamComponent = () => {
                     audio={false}
                     screenshotFormat="image/jpeg"
                     className='w-full h-full relative'
-                    mirrored={false}
+                    mirrored={true}
                 >
                     {({ getScreenshot }) => (
                         <Tooltip>

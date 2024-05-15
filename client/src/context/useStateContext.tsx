@@ -2,19 +2,25 @@ import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 interface StateContextType {
     capturedImage: string,
-    setCapturedImage: any
+    setCapturedImage: any,
+    outputGesture: string, // Define outputGesture in the interface
+    setOutputGesture: React.Dispatch<React.SetStateAction<string>> // Define setOutputGesture in the interface
 }
 
 const StateContext = createContext<StateContextType | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
-    const [capturedImage, setCapturedImage] = useState('')
+    const [capturedImage, setCapturedImage] = useState('');
+    const [outputGesture, setOutputGesture] = useState(''); // Initialize outputGesture state
 
     return (
         <StateContext.Provider
             value={{
-                capturedImage, setCapturedImage
+                capturedImage,
+                setCapturedImage,
+                outputGesture, // Provide outputGesture in the context value
+                setOutputGesture // Provide setOutputGesture in the context value
             }}
         >
             {children}
