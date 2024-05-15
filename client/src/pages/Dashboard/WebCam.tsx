@@ -13,22 +13,6 @@ const WebCamComponent = () => {
     const captureImage = async (getScreenshot) => {
         const imageSrc = getScreenshot();
         setCapturedImage(imageSrc);
-
-        // Create FormData object
-        const requestUrl = "http://127.0.0.1:8000/detect"; 
-
-        try {
-            const response = await axios.post(requestUrl, imageSrc, {
-                headers: {
-                    'Content-Type': 'image/jpeg'
-                }
-            });
-            console.log('Gesture detected:', response.data);
-            // Handle the response data as needed
-        } catch (error) {
-            console.error('Error detecting gesture:', error);
-            // Handle errors
-        }
     };
 
     return (
@@ -38,7 +22,7 @@ const WebCamComponent = () => {
                     audio={false}
                     screenshotFormat="image/jpeg"
                     className='w-full h-full relative'
-                    mirrored = "false"
+                    mirrored = {false}
                 >
                     {({ getScreenshot }) => (
                         <Tooltip>
