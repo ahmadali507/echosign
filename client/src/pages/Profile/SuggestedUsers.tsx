@@ -23,7 +23,7 @@ const SuggestedFriends = () => {
     return (
         <div className='flex flex-col gap-y-2 mt-4 w-full' >
 
-            <h3 className="font-semibold text-2xl ">Suggested To You</h3>
+            <h3 className="font-semibold text-2xl ">Suggested For You</h3>
 
             <div className='w-full flex flex-col gap-4 '>
                 {

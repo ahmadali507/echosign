@@ -19,7 +19,7 @@ top_gesture = recognition_result.gestures[0][0]
 print(f"Gesture recognized: {top_gesture.category_name} ({top_gesture.score})")
 
 # Set up the URL for the API endpoint
-url = "http://127.0.0.1:8000/detect"
+url = "http://127.0.0.1:8001/detect"
 
 # Set up the payload for the POST request
 files = {'image': open(image_path, 'rb')}  # Pass the image file directly without encoding

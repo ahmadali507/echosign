@@ -4,7 +4,7 @@ const Menubar = ({ activeMenuItem, setActiveMenuItem }: { activeMenuItem: any, s
     const menuItems = [
         { label: 'All Users', value: 'Find' },
         { label: 'Your Friends', value: 'Friends' },
-        { label: 'Suggested To You', value: 'Suggested' },
+        { label: 'Suggested For You', value: 'Suggested' },
         { label: 'Friend Requests', value: 'Received' },
         { label: 'Send Invitations', value: 'Sent' },
     ];

@@ -25,7 +25,7 @@ const Mimick = () => {
         formData.append("image", file);
         console.log(formData);
 
-        const requestUrl = "http://127.0.0.1:8000/detect";
+        const requestUrl = "http://127.0.0.1:8001/detect";
 
         try {
             const response = await axios.post(requestUrl, formData, {

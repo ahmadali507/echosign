@@ -26,7 +26,7 @@ const SentRequest = ({ totalPages, page, setPage }: { totalPages: number, page: 
                             <div className='col-span-4 w-full flex flex-col justify-center items-center grayscale '>
                                 <img src={empty} alt='Empty' className='w-96 h-96 grayscale ' />
                                 <span className='text-foreground text-center text-lg font-semibold ' >Nothing Found.</span>
-                                <span className='text-muted-foreground text-center text-md ' >It's our fault not yours.</span>
+                                <span className='text-muted-foreground text-center text-md ' >It's our fault, not yours.</span>
                             </div>
                             :
                             sentRequests.map((friend, index) => (
