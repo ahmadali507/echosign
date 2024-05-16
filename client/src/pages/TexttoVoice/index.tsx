@@ -71,7 +71,7 @@ const TextToVoice = () => {
                 className="w-full h-full bg-gray-100 rounded-lg p-4 text-black text-lg resize-none"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="type something here"
+                placeholder="Type something here"
                 rows={10}
                 cols={50}
             />
