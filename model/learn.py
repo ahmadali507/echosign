@@ -28,9 +28,9 @@ origins = [
     "http://localhost:5173",
     "http://localhost:5173/dashboard",
     "http://localhost",
-    "http://localhost:8000",
+    "http://localhost:8001",
     "http://127.0.0.1",
-    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8001",
 ]
 
 app.add_middleware(
@@ -87,4 +87,4 @@ async def detect_gesture(image: UploadFile = File(None)):
         raise HTTPException(status_code=500, detail="Error processing image data.")
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

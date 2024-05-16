@@ -16,9 +16,9 @@ const FriendButton = ({ user }: { user: User }) => {
     const isProfilePage = Boolean(userId)
     const { friends, sentRequests, receivedRequests } = useSelector((state: RootState) => state.friend)
 
-    const isFriend = friends.find(f => f._id === user._id);
-    const isFriendRequestSent = sentRequests.find(f => f._id === user._id);
-    const isFriendRequestReceived = receivedRequests.find(f => f._id === user._id);
+    const isFriend = friends.find(f => f?._id === user?._id);
+    const isFriendRequestSent = sentRequests.find(f => f?._id === user?._id);
+    const isFriendRequestReceived = receivedRequests.find(f => f?._id === user?._id);
 
     //////////////////////////////////////////////////////// STATES /////////////////////////////////////////////////////////
     const [loading, setLoading] = useState({
@@ -60,7 +60,7 @@ const FriendButton = ({ user }: { user: User }) => {
     return (
         <div>
             {isFriend && !isProfilePage && (
-                <Button className="bg-black hover:bg-black/80" onClick={() => navigate(`/user/${user._id}`)}>
+                <Button className="bg-black hover:bg-black/80" onClick={() => navigate(`/user/${user?._id}`)}>
                     View Profile
                 </Button>
             )}
@@ -93,7 +93,7 @@ const FriendButton = ({ user }: { user: User }) => {
                     </Button>
                     <Button
                         className="bg-black hover:bg-black/80"
-                        onClick={() => navigate(`/user/${user._id}`)}
+                        onClick={() => navigate(`/user/${user?._id}`)}
                     >
                         View Profile
                     </Button>

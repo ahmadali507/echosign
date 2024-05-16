@@ -4,6 +4,7 @@ const userSchema = new Schema({
   photoUrl: { type: String },
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },
+  bio: { type: String, default: '' },
   username: { type: String, unique: true },
   email: { type: String, unique: true },
   password: { type: String },

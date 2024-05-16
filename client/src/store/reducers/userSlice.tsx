@@ -39,7 +39,7 @@ export const getUser = createAsyncThunk<User, string>('user/getUser', async (use
     }
 });
 
-export const updateProfile = createAsyncThunk<User, { userId: string, data: { firstName: string, lastName: string } }>('user/updateProfile', async ({ userId, data: input }) => {
+export const updateProfile = createAsyncThunk<User, { userId: string, data: { firstName: string, lastName: string, bio: string } }>('user/updateProfile', async ({ userId, data: input }) => {
     try {
         const { data } = await api.updateUser(userId, input);
         return data as User;
