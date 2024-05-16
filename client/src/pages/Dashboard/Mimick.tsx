@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button"
 import { useStateContext } from "@/context/useStateContext"
 import axios from "axios"
-import { useState } from "react"
 import toast from "react-hot-toast"
+import { FASTAPI_URL } from '@/constants'
 
 const Mimick = () => {
 
+    /////////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////////////
     const { setOutputGesture } = useStateContext();
-    const {setDetectedText} = useStateContext()
-;     const { capturedImage } = useStateContext()
+    const { setDetectedText } = useStateContext()
+    const { capturedImage } = useStateContext()
 
+    /////////////////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////////////////
     const onExport = async () => {
 
         if (!capturedImage) return toast.error('No image captured')
@@ -24,8 +26,7 @@ const Mimick = () => {
         const formData = new FormData();
         formData.append("image", file);
 
-        const requestUrl = "http://127.0.0.1:8000/detect";
-
+        const requestUrl = `${FASTAPI_URL}/detect`
         try {
             const response = await axios.post(requestUrl, formData, {
                 headers: {
@@ -33,7 +34,7 @@ const Mimick = () => {
                 },
             });
             setOutputGesture(response.data.gesture);
-            setDetectedText(response.data.gesture); 
+            setDetectedText(response.data.gesture);
 
         } catch (error) {
             console.error('Error detecting gesture:', error);
