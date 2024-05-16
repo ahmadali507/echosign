@@ -100,7 +100,7 @@ const Footer = () => {
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>FAQs</Link>
                     <Link to='/about' className='hover:text-green hover:underline cursor-pointer'>About Us</Link>
                     <Link to='/contact' className='hover:text-green hover:underline cursor-pointer'>Contact Us</Link>
-                    <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Privacy Policy </Link>
+                    <Link to='/PrivacyPolicy' className='hover:text-green hover:underline cursor-pointer'>Privacy Policy </Link>
                     <Link to='/terms-and-conditions' className='hover:text-green hover:underline cursor-pointer'>Terms and Conditions </Link>
                 </div>
                 <div className='flex justify-center items-center h-fit w-full mt-4'>

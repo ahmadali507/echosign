@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useStateContext } from '@/context/useStateContext';
-import { Camera, CameraIcon } from 'lucide-react';
+import { Camera, Scan, CameraOffIcon } from 'lucide-react';
 import { useState } from 'react';
 import Webcam from 'react-webcam';
 
@@ -25,21 +25,38 @@ const WebCamComponent = () => {
                     mirrored={true}
                 >
                     {({ getScreenshot }) => (
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <Button
-                                    variant='outline'
-                                    onClick={() => {
-                                        const imageSrc = getScreenshot();
-                                        setCapturedImage(imageSrc);
-                                    }}
-                                    className='absolute top-4 right-4'
-                                >
-                                    <CameraIcon />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Capture</TooltipContent>
-                        </Tooltip>
+                        <div className="absolute bottom-4 right-4 flex items-center">
+
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Button
+                                        variant='outline'
+                                        className='ml-1 bg-green-500 shadow-md border border-white hover:bg-green-600'
+                                        onClick={() => {
+                                            const imageSrc = getScreenshot();
+                                            setCapturedImage(imageSrc);
+                                        }}
+                                    >
+                                        <Scan />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Capture</TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Button
+                                        variant='outline'
+                                        className='ml-1 bg-red-400 shadow-md border border-white hover:bg-red-500'
+                                        onClick={() => setEnableCamera(false)}
+                                    >
+                                        <CameraOffIcon />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Disable</TooltipContent>
+                            </Tooltip>
+                        </div>
+
+
                     )}
                 </Webcam>
             ) : (
