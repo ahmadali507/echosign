@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 const TextBox = () => {
     const {outputGesture} = useStateContext(); 
+    const {detectedText,setDetectedText} = useStateContext(); 
     const [text, setText] = useState('');
     const [speaking, setSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -36,7 +37,7 @@ const TextBox = () => {
         if (speaking) return
 
         const synth = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
+        const utterance = new SpeechSynthesisUtterance((detectedText ? detectedText : text))
 
         if (selectedVoice) {
             utterance.voice = selectedVoice;
@@ -70,8 +71,8 @@ const TextBox = () => {
             <h2 className="text-xl font-medium">Text</h2>
             <textarea
                 className="w-full h-full bg-gray-100 rounded-lg p-4 text-black text-lg resize-none"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+                value={(detectedText ? detectedText : text)}
+                onChange={(e) => {setText(e.target.value); setDetectedText(e.target.value)}}
                 placeholder={outputGesture}
                 rows={6}
                 cols={50}
@@ -94,7 +95,7 @@ const TextBox = () => {
                     ))}
                 </select>
             </div>
-            <Button onClick={speakText} disabled={!text || speaking}>
+            <Button onClick={speakText} disabled={(!text && !detectedText) || speaking}>
                 {speaking ? 'Converting' : 'Convert'}
             </Button>
             <Button onClick={exportAudio} disabled={!audioData}>

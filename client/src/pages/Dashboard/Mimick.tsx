@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { useStateContext } from "@/context/useStateContext"
 import axios from "axios"
+import { useState } from "react"
 import toast from "react-hot-toast"
 
 const Mimick = () => {
 
     const { setOutputGesture } = useStateContext();
-    const { capturedImage } = useStateContext()
+    const {setDetectedText} = useStateContext()
+;     const { capturedImage } = useStateContext()
 
     const onExport = async () => {
 
@@ -32,6 +34,7 @@ const Mimick = () => {
                 },
             });
             setOutputGesture(response.data.gesture);
+            setDetectedText(response.data.gesture); 
             console.log('Gesture detected:', response.data);
 
 
