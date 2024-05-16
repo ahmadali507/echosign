@@ -7,6 +7,7 @@ export { default as PrivacyPolicy } from './Auth/PrivacyPolicy'
 export { default as ChangePassword } from './Auth/ChangePassword'
 export { default as VerifyEmail } from './Auth/VerifyEmail'
 export { default as Contact } from './Auth/Contact'
+export { default as HowItWork } from './/LandingPage/HowItWork.tsx'
 
 export { default as LandingPage } from './LandingPage'
 export { default as Dashboard } from './Dashboard'
