@@ -5,23 +5,26 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { RootState } from '@/store/store';
-import { User } from '@/interfaces';
+import { Chat, User } from '@/interfaces';
+import { createChat, setChatSlice } from '@/store/reducers/chatSlice';
 
 const FriendButton = ({ user }: { user: User }) => {
 
     //////////////////////////////////////////////////////// VARIABLES /////////////////////////////////////////////////////////
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { chats } = useSelector((state: RootState) => state.chat)
+    const { loggedUser } = useSelector((state: RootState) => state.user)
     const { userId } = useParams()
     const isProfilePage = Boolean(userId)
     const { friends, sentRequests, receivedRequests } = useSelector((state: RootState) => state.friend)
 
-    const isFriend = friends.find(f => f._id === user._id);
-    const isFriendRequestSent = sentRequests.find(f => f._id === user._id);
-    const isFriendRequestReceived = receivedRequests.find(f => f._id === user._id);
+    const isFriend = friends.find(f => f?._id === user?._id);
+    const isFriendRequestSent = sentRequests.find(f => f?._id === user?._id);
+    const isFriendRequestReceived = receivedRequests.find(f => f?._id === user?._id);
 
     //////////////////////////////////////////////////////// STATES /////////////////////////////////////////////////////////
-    const [loading, setLoading] = useState({ send: false, accept: false, reject: false, remove: false, });
+    const [loading, setLoading] = useState({ send: false, accept: false, reject: false, remove: false, chat: false });
 
     //////////////////////////////////////////////////////// FUNCTIONS /////////////////////////////////////////////////////////
     const handleSendFriendRequest = () => {
@@ -46,14 +49,44 @@ const FriendButton = ({ user }: { user: User }) => {
 
     const onCreateChat = () => {
 
+        setLoading((pre) => ({ ...pre, chat: false }));
+        const existingChat = chats.filter((chat: Chat) => chat?.participants?.findIndex(p => String((p as User)._id) == String(user._id)) != -1);
+        if (existingChat.length > 0) {
+            localStorage.setItem('lastChat', String(existingChat[0]?._id));
+            dispatch(setChatSlice(existingChat[0]))
+            setLoading((pre) => ({ ...pre, chat: false }));
+            navigate('/chat');
+        }
+        else {
+            const newChatData: Chat = {
+                participants: [String(loggedUser?._id), String(user?._id)],
+                lastMessage: '',
+                lastMessageTimestamp: new Date(),
+            };
+            dispatch<any>(createChat(newChatData))
+                .then(({ payload }: { payload: Chat }) => {
+                    if (payload) {
+                        localStorage.setItem('lastChat', String(payload?._id));
+                        navigate('/chat');
+                    }
+                })
+                .finally(() => {
+                    setLoading(pre => ({ ...pre, chat: false }))
+                })
+        }
     }
 
     return (
         <div>
             {isFriend && !isProfilePage && (
-                <Button className="bg-black hover:bg-black/80" onClick={() => navigate(`/user/${user._id}`)}>
-                    View Profile
-                </Button>
+                <div className='flex gap-4' >
+                    <Button variant='secondary' className="" onClick={onCreateChat}>
+                        {loading.chat ? 'Loading' : 'Message'}
+                    </Button>
+                    <Button className="bg-black hover:bg-black/80" onClick={() => navigate(`/user/${user?._id}`)}>
+                        View Profile
+                    </Button>
+                </div>
             )}
             {isFriendRequestSent && (
                 <Button variant='destructive' disabled={loading.remove} onClick={handleRemoveFriendRequest}>
@@ -82,12 +115,15 @@ const FriendButton = ({ user }: { user: User }) => {
                     <Button disabled={loading.send} onClick={handleSendFriendRequest}>
                         {loading.send ? 'Loading' : 'Add Friend'}
                     </Button>
-                    <Button
-                        className="bg-black hover:bg-black/80"
-                        onClick={() => navigate(`/user/${user._id}`)}
-                    >
-                        View Profile
-                    </Button>
+                    {
+                        !isProfilePage &&
+                        <Button
+                            className="bg-black hover:bg-black/80"
+                            onClick={() => navigate(`/user/${user?._id}`)}
+                        >
+                            View Profile
+                        </Button>
+                    }
                 </div>
             )}
         </div>

@@ -2,9 +2,8 @@ import { Button } from '@/components/ui/button';
 import { useStateContext } from '@/context/useStateContext';
 import { useState, useEffect } from 'react';
 
-const TextBox = () => {
-    const {outputGesture} = useStateContext(); 
-    const {detectedText,setDetectedText} = useStateContext(); 
+const TextToVoice = () => {
+    const { outputGesture } = useStateContext();
     const [text, setText] = useState('');
     const [speaking, setSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -28,16 +27,16 @@ const TextBox = () => {
 
     const Daniel = voices.find((voice) => voice.name === 'Daniel');
     const Alex = voices.find((voice) => voice.name === 'Alex');
-    const Samantha = voices.find((voice) => voice.name === 'Samantha');
+    const Sam = voices.find((voice) => voice.name === 'Samantha');
     const Tessa = voices.find((voice) => voice.name === 'Tessa');
 
-    const availableVoices = [Alex, Daniel, Tessa, Samantha].filter((voice) => voice !== undefined) as SpeechSynthesisVoice[];
+    const availableVoices = [Alex, Daniel, Tessa, Sam].filter((voice) => voice !== undefined) as SpeechSynthesisVoice[];
 
     const speakText = () => {
         if (speaking) return
 
         const synth = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance((detectedText ? detectedText : text))
+        const utterance = new SpeechSynthesisUtterance(text);
 
         if (selectedVoice) {
             utterance.voice = selectedVoice;
@@ -67,14 +66,14 @@ const TextBox = () => {
     };
 
     return (
-        <div className="w-full h-full rounded-lg flex flex-col gap-1 ">
-            <h2 className="text-xl font-medium">Text</h2>
+        <div className="mt-5 w-full h-full rounded-lg flex flex-col gap-1">
+            <h2 className="text-2xl font-medium">Text</h2>
             <textarea
                 className="w-full h-full bg-gray-100 rounded-lg p-4 text-black text-lg resize-none"
-                value={(detectedText ? detectedText : text)}
-                onChange={(e) => {setText(e.target.value); setDetectedText(e.target.value)}}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
                 placeholder={outputGesture}
-                rows={6}
+                rows={10}
                 cols={50}
             />
             <div>
@@ -95,7 +94,7 @@ const TextBox = () => {
                     ))}
                 </select>
             </div>
-            <Button onClick={speakText} disabled={(!text && !detectedText) || speaking}>
+            <Button onClick={speakText} disabled={!text || speaking}>
                 {speaking ? 'Converting' : 'Convert'}
             </Button>
             <Button onClick={exportAudio} disabled={!audioData}>
@@ -105,4 +104,4 @@ const TextBox = () => {
     );
 };
 
-export default TextBox;
+export default TextToVoice;

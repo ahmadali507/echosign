@@ -58,11 +58,13 @@ const chatSlice = createSlice({
     reducers: {
         resetState: () => initialState,
         setChatSlice: (state, action) => { state.currentChat = action.payload },
+        setChatsSlice: (state, action) => { state.chats = action.payload },
     },
     extraReducers: (builder) => {
         builder
             .addCase(getChats.fulfilled, (state, action) => {
                 state.chats = action.payload
+                state.currentChat = action.payload.find(chat => String(chat._id) == String(localStorage.getItem('lastChat'))) || null
             })
             .addCase(getMessages.fulfilled, (state, action) => {
                 state.currentChat = action.payload
@@ -94,4 +96,4 @@ const chatSlice = createSlice({
 
 export default chatSlice.reducer;
 export const selectChat = (state: RootState) => state.auth;
-export const { resetState: resetChatState, setChatSlice } = chatSlice.actions;
+export const { resetState: resetChatState, setChatSlice, setChatsSlice } = chatSlice.actions;

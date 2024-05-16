@@ -34,22 +34,21 @@ export interface ContactData {
 }
 
 export interface Chat {
-  _id: string;
+  _id?: string;
   lastMessage: string;
   lastMessageTimestamp: Date;
-  participants: User[];
-  messages: Message[];
-  createdAt: Date
-  updatedAt: Date
-  otherUser?: User
+  participants: User[] | string[];
+  messages?: Message[];
+  createdAt?: Date
+  updatedAt?: Date
 }
 export interface Message {
-  _id: string;
-  receiver: User;
-  sender: User;
+  _id?: string;
+  receiver: User | string;
+  sender: User | string;
   timestamp: Date;
-  readBy: User[];
+  readBy: User[] | string[];
   text: string;
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { RootState } from '@/store/store'
+import Cookies from 'js-cookie'
 import { ReactNode } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,17 +8,19 @@ import { useNavigate } from 'react-router-dom'
 const Authenticated = ({ children }: { children: ReactNode }) => {
 
     ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
-    const { loggedUser, isLoading } = useSelector((state: RootState) => state.user)
+    const { isLoading } = useSelector((state: RootState) => state.user)
     const navigate = useNavigate()
 
-    if (isLoading && !loggedUser) {
+    const isLoggedIn = Cookies.get('echo.token')
+
+    if (isLoading && !isLoggedIn) {
         return (
             <div className="w-full h-full flex justify-center items-center">
                 <h1 className='text-3xl font-semibold' >Loading...</h1>
             </div>
         )
     }
-    else if (loggedUser) {
+    else if (isLoggedIn) {
         return children
     }
     else {

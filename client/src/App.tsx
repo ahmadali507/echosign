@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import { ForgetPassword, LandingPage, Login, Register, TermsAndConditions, Contact, Dashboard, Profile, About, Users } from "./pages";
+import { ForgetPassword, LandingPage, Login, Register, TermsAndConditions, Contact, Dashboard, Profile, About, Users, TextToVoice } from "./pages";
 import DefaultLayout from "./wrappers/DefaultLayout";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +37,8 @@ function App() {
         <Route path="/forget-password" element={<ForgetPassword />} />
 
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
+        <Route path="/TextToVoice" element={<TextToVoice />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

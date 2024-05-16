@@ -34,12 +34,12 @@ const Navbar = () => {
             <Link to='/' ><img src={Logo} alt="Image" className="w-36 z-10" /></Link>
 
 
-            <ul className="flex justify-center items-center gap-6">
+            <ul className="flex justify-center items-center gap-6 mt-2">
                 <li className='hover:text-green hover:underline '  >
-                    <Link to='/users' >Gesture Recognition</Link>
+                    <Link to='/dashboard' >Gesture Recognition</Link>
                 </li>
                 <li className='hover:text-green hover:underline '  >
-                    <Link to='/users' >Text to voice</Link>
+                    <Link to='/TextToVoice' >Text To Voice</Link>
                 </li>
                 <li className='hover:text-green hover:underline '  >
                     <Link to='/users' >Users</Link>

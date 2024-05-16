@@ -31,7 +31,7 @@ const HowItWork = () => {
                     <div className="flex flex-col items-center ">
                         <h1 className="font-bold text-2xl ">Start Camera</h1>
                         <p className="text-base">Click the camera icon to start camera.</p>
-                        <Button className='mt-3 space-x-2 ' ><CircularNumber num={1} /> <span>Enable Camera</span></Button>
+                        <div className='h-10 px-4 py-2 rounded-md inline-flex items-center bg-green text-white mt-3 space-x-2 ' ><CircularNumber num={1} /> <span>Enable Camera</span></div>
                     </div>
                 </div>
                 <div className="bg-primary/5 rounded-md p-4 flex flex-col justify-center items-center gap-4 w-80 relative">
@@ -39,7 +39,7 @@ const HowItWork = () => {
                     <div className="flex flex-col items-center ">
                         <h1 className="font-bold text-2xl ">Start Recording</h1>
                         <p className="text-base">Record the signs.</p>
-                        <Button disabled={true} className='mt-3 space-x-2 ' ><CircularNumber num={2} /> <span>Start Recording</span></Button>
+                        <div className='h-10 px-4 py-2 rounded-md inline-flex items-center bg-green text-white mt-3 space-x-2 ' ><CircularNumber num={2} /> <span>Start Recording</span></div>
                     </div>
                 </div>
                 <div className="bg-primary/5 rounded-md p-4 flex flex-col justify-center items-center gap-4 w-80 relative">
@@ -47,7 +47,7 @@ const HowItWork = () => {
                     <div className="flex flex-col items-center ">
                         <h1 className="font-bold text-2xl ">Play Audio</h1>
                         <p className="text-base">Click audio button to listen.</p>
-                        <Button disabled={true} className='mt-3 space-x-2 ' ><CircularNumber num={3} /> <span>Play Audio</span></Button>
+                        <div className='h-10 px-4 py-2 rounded-md inline-flex items-center bg-green text-white mt-3 space-x-2 ' ><CircularNumber num={3} /> <span>Play Audio</span></div>
                     </div>
                 </div>
 

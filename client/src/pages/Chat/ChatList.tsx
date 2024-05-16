@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
 import { Chat, User } from '@/interfaces';
-import { getOtherUserDetail } from '@/utils/functions';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { RootState } from '@/store/store';
-import { useStateContext } from '@/context/useStateContext';
+import { setChatSlice } from '@/store/reducers/chatSlice';
 
-export const ChatList = ({ chats, setChats, }: { chats: Chat[]; setChats: any }) => {
+export const ChatList = ({ chats, setChats }: { chats: Chat[], setChats: any }) => {
+
   //////////////////////////////////////////////// VARIABLES //////////////////////////////////////////////////////////
-  const { users } = useSelector((state: RootState) => state.user); // TODO: this should be changed into userApplicants
+  const dispatch = useDispatch()
   const { chats: fetchedChats } = useSelector((state: RootState) => state.chat);
-  const { selectedChat, setSelectedChat } = useStateContext();
   const currentUserId = String(localStorage.getItem('userId'));
+  const { loggedUser } = useSelector((state: RootState) => state.user)
+  const { currentChat } = useSelector((state: RootState) => state.chat)
 
   //////////////////////////////////////////////// STATES //////////////////////////////////////////////////////////
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,9 +25,9 @@ export const ChatList = ({ chats, setChats, }: { chats: Chat[]; setChats: any })
   }, [currentUserId]);
 
   //////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////////
-  const onChatClick = (chat: Chat, otherUser: User) => {
-    localStorage.setItem('lastChat', chat?._id);
-    setSelectedChat({ ...chat, otherUser });
+  const onChatClick = (chat: Chat) => {
+    localStorage.setItem('lastChat', String(chat?._id));
+    dispatch(setChatSlice(chat))
     // Socket: mark all messages as read
   };
   const onSearch = () => {
@@ -37,7 +38,7 @@ export const ChatList = ({ chats, setChats, }: { chats: Chat[]; setChats: any })
     const lowercasedQuery = searchQuery.toLowerCase();
 
     const filteredChats = defaultChats?.filter((chat: Chat) => {
-      const otherUser = getOtherUserDetail(chat.participants.map(u => String(u._id)), users, currentUserId); // user to chat with
+      const otherUser = chat?.participants?.filter(p => String((p as User)?._id) != String(loggedUser?._id))[0] as User
       return otherUser?.username?.toLowerCase().includes(lowercasedQuery);
     });
     setChats(filteredChats);
@@ -49,24 +50,20 @@ export const ChatList = ({ chats, setChats, }: { chats: Chat[]; setChats: any })
     const lastMessage = chat.lastMessage.slice(0, 30) || 'No messages yet';
     const unreadCount = 0;
 
-    const [otherUser, setOtherUser] = useState<User>(getOtherUserDetail(chat.participants.map(u => String(u._id)), users, currentUserId) as User);
-
-    useEffect(() => {
-      if (users.length > 0) setOtherUser(getOtherUserDetail(chat.participants.map(u => String(u._id)), users, currentUserId) as User);
-    }, [users]);
+    const otherUser = chat?.participants?.filter(p => String((p as User)?._id) != String(loggedUser?._id))[0] as User
 
     return (
       <div
-        onClick={() => onChatClick(chat, otherUser)}
-        className={`${selectedChat?._id == chat?._id ? 'bg-white/75' : ''} 
-        flex cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-white dark:hover:bg-strokedark`}
+        onClick={() => onChatClick(chat)}
+        className={`${currentChat?._id == chat?._id ? 'bg-green' : 'bg-white'} 
+        flex cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-green hover:text-white `}
       >
         <Avatar>
           <AvatarImage src={otherUser?.photoUrl} />
-          <AvatarFallback>{otherUser?.username?.charAt(0)}</AvatarFallback>
+          <AvatarFallback className='text-black capitalize' >{otherUser?.username?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="flex w-fit flex-col ">
-          <h5 className="text-sm font-medium text-black dark:text-white">
+          <h5 className="text-sm font-medium">
             {otherUser?.username}
             {unreadCount > 0 && (
               <span className="rounded-full bg-blue-500 px-2 py-1 text-xs text-white">

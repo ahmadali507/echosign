@@ -9,7 +9,7 @@ import Find from './Find';
 import { useDispatch, useSelector } from 'react-redux';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { getFriends, getReceivedRequests, getSentRequests, getSuggestedUsers, searchFriends, searchUsers } from '@/store/reducers/friendSlice';
+import { getFriends, getReceivedRequests, getSentRequests, getSuggestedUsers } from '@/store/reducers/friendSlice';
 import { RootState } from '@/store/store';
 import { getUsers } from '@/store/reducers/userSlice';
 
@@ -29,6 +29,9 @@ const Users = () => {
     const maxLength = activeMenuItem == 'find' ? users?.length : activeMenuItem == 'friends' ? friends?.length : activeMenuItem == 'suggested' ? suggestedUsers?.length : activeMenuItem == 'sent' ? sentRequests?.length : receivedRequests?.length;
     const totalPages = Math.ceil(maxLength / pageSize);
 
+    ////////////////////////////////////////////////// STATES //////////////////////////////////////////////////
+    const [data, setData] = useState({ friends, receivedRequests, sentRequests, suggestedUsers, users })
+
     ////////////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////////////
     useEffect(() => {
         if (users.length == 0) dispatch<any>(getUsers())
@@ -37,14 +40,34 @@ const Users = () => {
         if (suggestedUsers.length == 0) dispatch<any>(getSuggestedUsers(`?page=${page}&pageSize=${pageSize}`))
         if (friends.length == 0) dispatch<any>(getFriends(`?page=${page}&pageSize=${pageSize}`))
     }, [activeMenuItem, dispatch])  // page, pageSize
-
+    useEffect(() => {
+        setData({ friends, receivedRequests, sentRequests, suggestedUsers, users })
+    }, [friends, receivedRequests, sentRequests, suggestedUsers, users])
+    useEffect(() => {
+        console.log('data', data, searchValue)
+    }, [data])
     ////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////
     const onSearch = () => {
         setSearchedValue(searchValue)
-        if (activeMenuItem == 'find')
-            dispatch<any>(searchUsers(`?page=${page}&pageSize=${pageSize}&count=${true}&query=${searchValue}`)) //true, 
-        else
-            dispatch<any>(searchFriends(`?page=${page}&pageSize=${pageSize}&count=${true}&query=${searchValue}`))   //true, 
+        if (activeMenuItem == 'find') {
+            setData(pre => ({ ...pre, users: users.filter(user => user.username.toLowerCase()?.includes(searchValue.toLowerCase())) }))
+        }
+        else if (activeMenuItem == 'friends') {
+            setData(pre => ({ ...pre, friends: friends.filter(user => user.username.toLowerCase()?.includes(searchValue.toLowerCase())) }))
+        }
+        else if (activeMenuItem == 'received') {
+            setData(pre => ({ ...pre, receivedRequests: receivedRequests.filter(user => user.username.toLowerCase()?.includes(searchValue.toLowerCase())) }))
+        }
+        else if (activeMenuItem == 'sent') {
+            setData(pre => ({ ...pre, sentRequests: sentRequests.filter(user => user.username.toLowerCase()?.includes(searchValue.toLowerCase())) }))
+        }
+        else if (activeMenuItem == 'suggested') {
+            setData(pre => ({ ...pre, suggestedUsers: suggestedUsers.filter(user => user.username.toLowerCase()?.includes(searchValue.toLowerCase())) }))
+        }
+        // if (activeMenuItem == 'find')
+        //     dispatch<any>(searchUsers(`?page=${page}&pageSize=${pageSize}&count=${true}&query=${searchValue}`)) //true, 
+        // else
+        //     dispatch<any>(searchFriends(`?page=${page}&pageSize=${pageSize}&count=${true}&query=${searchValue}`))   //true, 
     }
 
 
@@ -60,7 +83,8 @@ const Users = () => {
                         placeholder="Search Friends..."
                         value={searchValue}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
-                        onKeyDown={(e: any) => e.key == 'Enter' && onSearch()}
+                        onKeyDown={() => onSearch()}
+                        onKeyUp={() => onSearch()}
                         className="w-full px-4 py-2"
                     />
                     <button title='Search' onClick={onSearch} className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer">
@@ -75,11 +99,11 @@ const Users = () => {
                     <Menubar activeMenuItem={activeMenuItem} setActiveMenuItem={setActiveMenuItem} />
                 </div>
                 <div className="col-span-3 w-full px-4 ">
-                    {activeMenuItem === 'find' && <Find totalPages={totalPages} page={page} setPage={setPage} />}
-                    {activeMenuItem === 'friends' && <Friends totalPages={totalPages} page={page} setPage={setPage} />}
-                    {activeMenuItem === 'suggested' && <SuggestedFriends totalPages={totalPages} page={page} setPage={setPage} />}
-                    {activeMenuItem === 'sent' && <SentRequests totalPages={totalPages} page={page} setPage={setPage} />}
-                    {activeMenuItem === 'received' && <ReceivedRequests totalPages={totalPages} page={page} setPage={setPage} />}
+                    {activeMenuItem === 'find' && <Find data={data?.users} totalPages={totalPages} page={page} setPage={setPage} />}
+                    {activeMenuItem === 'friends' && <Friends data={data?.friends} totalPages={totalPages} page={page} setPage={setPage} />}
+                    {activeMenuItem === 'suggested' && <SuggestedFriends data={data?.suggestedUsers} totalPages={totalPages} page={page} setPage={setPage} />}
+                    {activeMenuItem === 'sent' && <SentRequests data={data?.sentRequests} totalPages={totalPages} page={page} setPage={setPage} />}
+                    {activeMenuItem === 'received' && <ReceivedRequests data={data?.receivedRequests} totalPages={totalPages} page={page} setPage={setPage} />}
                 </div>
             </div>
 

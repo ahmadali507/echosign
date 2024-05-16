@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { updatePassword, updateProfile, uploadImage } from "@/store/reducers/userSlice";
-import { Eye, EyeOff, Upload } from "lucide-react";
+import { Eye, EyeOff, MessageCircle, Upload } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import Loader from "@/utils/Loader";
 import { RootState } from "@/store/store";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "@/store/reducers/userSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SuggestedFriends from "./SuggestedUsers";
@@ -19,10 +19,11 @@ const Profile = () => {
 
     ///////////////////////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////////////
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { userId } = useParams()
     const imageRef = useRef(null)
     const { currentUser, loggedUser } = useSelector((state: RootState) => state.user)
-    const initialData = { oldPassword: "", newPassword: "", firstName: loggedUser?.firstName || "", lastName: loggedUser?.lastName || "" }
+    const initialData = { oldPassword: "", newPassword: "", bio: loggedUser?.bio || "", firstName: loggedUser?.firstName || "", lastName: loggedUser?.lastName || "" }
 
     ///////////////////////////////////////////////////////// STATES ///////////////////////////////////////////////////////////
     const [formData, setFormData] = useState(initialData);
@@ -33,7 +34,7 @@ const Profile = () => {
 
     ///////////////////////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////////////
     useEffect(() => {
-        setFormData(pre => ({ ...pre, firstName: loggedUser?.firstName || "", lastName: loggedUser?.lastName || "" }))
+        setFormData(pre => ({ ...pre, firstName: loggedUser?.firstName || "", lastName: loggedUser?.lastName || "", bio: loggedUser?.bio || "" }))
     }, [loggedUser])
     useEffect(() => {
         if (userId) {
@@ -47,7 +48,7 @@ const Profile = () => {
             setImage(loggedUser?.photoUrl)
     }, [loggedUser, currentUser])
     ///////////////////////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////////////
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -62,7 +63,7 @@ const Profile = () => {
                 setFormData(initialData)
             })
             .catch((err: any) => {
-                console.log(err)
+                console.error(err)
             })
             .finally(() => {
                 setLoading(pre => ({ ...pre, password: false }))
@@ -75,12 +76,12 @@ const Profile = () => {
         if (!formData?.lastName) return toast.error('Last name is required.')
 
         setLoading(pre => ({ ...pre, profile: true }))
-        dispatch<any>(updateProfile({ userId: loggedUser?._id as string, data: { firstName: formData.firstName as string, lastName: formData.lastName as string } }))
+        dispatch<any>(updateProfile({ userId: loggedUser?._id as string, data: { firstName: formData.firstName as string, lastName: formData.lastName as string, bio: formData.bio as string } }))
             .then(() => {
                 setFormData(initialData)
             })
             .catch((err: any) => {
-                console.log(err)
+                console.error(err)
             })
             .finally(() => {
                 setLoading(pre => ({ ...pre, profile: false }))
@@ -157,7 +158,10 @@ const Profile = () => {
                             userId
                                 ?
                                 <div className="w-full flex flex-col justify-center items-center">
-                                    <h3 className="font-semibold text-2xl">{currentUser?.firstName || 'FirstName'} {currentUser?.lastName || 'LastName'}</h3>
+                                    <h3 className="font-semibold text-2xl flex items-center " >
+                                        {currentUser?.firstName || 'FirstName'} {currentUser?.lastName || 'LastName'}
+                                        <Button onClick={()=>navigate('/chat')} variant='ghost' size='icon' className="ml-2 cursor-pointer" ><MessageCircle/></Button>
+                                    </h3>
                                     <h4 className="font-medium text-xl text-gray-600 ">{currentUser?.username || 'Username'}</h4>
                                     <p className="font-light text-sm text-gray-500 mt-4 ">{currentUser?.bio || 'No bio found.'}</p>
                                     <FriendButton user={currentUser as User} />
@@ -228,7 +232,23 @@ const Profile = () => {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="flex justify-end items-center">
+                                        <div className="mt-4 mb-1 grid grid-cols-1 gap-4">
+                                            <div className="col-span-1 form-group mb-2">
+                                                <label htmlFor="username" className="block text-sm mb-2">
+                                                    Bio:
+                                                </label>
+                                                <textarea
+                                                    className="w-full h-full border border-gray-300 bg-white rounded-lg p-4 text-black text-lg resize-none"
+                                                    id="bio"
+                                                    name="bio"
+                                                    value={formData?.bio}
+                                                    onChange={onChange}
+                                                    placeholder="Hi! It's me!"
+                                                    rows={4}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-end items-center mt-8">
                                             <Button
                                                 type="submit"
                                                 disabled={loading.profile}

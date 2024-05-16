@@ -9,7 +9,6 @@ const UserCard = ({ friend: user }: { friend: User, type: string }) => {
   //////////////////////////////////////////////////////// VARIABLES /////////////////////////////////////////////////////////
   const navigate = useNavigate();
 
-
   return (
     <div className="bg-white p-4 shadow-md rounded-md flex justify-between">
       <div

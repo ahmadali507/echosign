@@ -2,65 +2,69 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Send } from 'lucide-react';
-import { useStateContext } from '@/context/useStateContext';
 import { RootState } from '@/store/store';
-import { getOtherUserDetail } from '@/utils/functions';
-import { setChatSlice } from '@/store/reducers/chatSlice';
-import { Chat, Message } from '@/interfaces';
+import { sendMessage, setChatSlice } from '@/store/reducers/chatSlice';
+import { Chat, Message, User } from '@/interfaces';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { getRelativeTime } from '@/utils/functions';
+import { SOCKET_URL } from '@/constants';
+import { io } from 'socket.io-client';
 
-export const ChatBox = () => {
+export const ChatBox = ({ chats }: { chats: Chat[], setChats: any }) => {
   ///////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////////
   const dispatch = useDispatch();
   const scrollRef = useRef(null);
-  const { selectedChat, setSelectedChat } = useStateContext();
-  const { users } = useSelector((state: RootState) => state.user);
-  const { chats, currentChat } = useSelector((state: RootState) => state.chat);
-  const currentUserId = String(localStorage.getItem('userId'));
+  const { currentChat } = useSelector((state: RootState) => state.chat);
+  const { loggedUser } = useSelector((state: RootState) => state.user);
   const lastChatId = localStorage.getItem('lastChat') ? String(localStorage.getItem('lastChat')) : null;
+  const otherUser = currentChat?.participants?.filter(p => String((p as User)?._id) != String(loggedUser?._id))[0] as User
 
   ///////////////////////////////////////////////////// STATES ////////////////////////////////////////////////////
   const [messageInput, setMessageInput] = useState('');
 
   ///////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////////
   useEffect(() => {
-    setTimeout(() => {
-      scrollToBottom();
-    }, 100);
-  }, [selectedChat]);
+    setTimeout(() => { scrollToBottom(); }, 100);
+  }, [currentChat]);
   useEffect(() => {
-    if (lastChatId && !selectedChat) {
-      const finded = chats?.find((c) => c?._id == lastChatId);
-      if (!finded) return;
-      const otherUser = getOtherUserDetail(finded?.participants?.map(f => String(f?._id)), users, currentUserId);
-      setSelectedChat({ ...finded, otherUser });
-    }
-  }, []);
-  useEffect(() => {
-    if (selectedChat) {
-      // Socket: Fetch messages chatId: selectedChat._id
+    if (currentChat) {
+      // Socket: Fetch messages chatId: currentChat._id
     } else if (lastChatId) {
-      // Socket: Fetch messages chatId: selectedChat._id
+      // Socket: Fetch messages chatId: currentChat._id
     }
-  }, [selectedChat, dispatch]);
+  }, [currentChat, dispatch]);
   useEffect(() => {
     scrollToBottom();
   }, [currentChat]);
 
   ///////////////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////////////
-  const onSendMessage = (inputMessage?: string) => {
-    const msgInput = inputMessage ? inputMessage : messageInput;
+  const onSendMessage = () => {
+    if (messageInput.trim() == '') return;
 
-    if (msgInput.trim() == '') return;
+    const sender = loggedUser as User
+    const receiver = otherUser as User
 
-    const newMessage = { senderId: currentUserId, text: msgInput, timestamp: new Date(), readBy: [currentUserId] };
+    const newMessage: Message = {
+      sender: String(sender?._id),
+      receiver: String(receiver._id),
+      text: messageInput,
+      timestamp: new Date(),
+      readBy: [String(loggedUser?._id)]
+    };
 
-    dispatch(setChatSlice({ ...currentChat, messages: [...(currentChat?.messages || []), newMessage] }));
+    dispatch(setChatSlice({
+      ...currentChat,
+      lastMessage: messageInput,
+      lastMessageTimestamp: new Date(),
+      messages: [...(currentChat?.messages || []), { ...newMessage, sender, receiver }]
+    }));
 
-    // Update last message of chat
-    dispatch(setChatSlice(chats.map((c: Chat) => (c = c._id == selectedChat._id ? { ...c, lastMessage: msgInput, lastMessageTimestamp: new Date() } : c))));
+    const socket = io(SOCKET_URL);
+    socket.emit('sendMessage', newMessage)
 
-    // Create message in db
-    //  Socket: send message
+    dispatch<any>(sendMessage({ chatId: String(currentChat?._id), message: newMessage }))
 
     scrollToBottom();
     setMessageInput('');
@@ -68,27 +72,27 @@ export const ChatBox = () => {
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
+      // TODO
       const scrollContainer = scrollRef.current;
       setTimeout(() => {
-        scrollContainer.scroll({
-          top: scrollContainer.scrollHeight - scrollContainer.clientHeight,
-          behavior: 'smooth',
-        });
+        scrollContainer.scroll({ top: scrollContainer.scrollHeight - scrollContainer.clientHeight, behavior: 'smooth', });
       }, 20);
     }
   };
 
   ///////////////////////////////////////////////////// COMPONENTS ////////////////////////////////////////////////////
-  const MessageComponent = ({ name, message, time, isMe, }: { name: string; message: string; time: Date; isMe: boolean; }) => {
+  const MessageComponent = ({ message }: { message: Message }) => {
+
+    const msg = message.text
+    const time = getRelativeTime(message.timestamp)
+    const isMe = message?.sender == String(loggedUser?._id)
+
     return (
-      <div className={isMe ? 'ml-auto max-w-125' : 'max-w-125'}>
-        {!isMe && <p className="mb-2.5 text-sm font-medium">{name}</p>}
-        <div
-          className={`mb-2.5 rounded-2xl px-5 py-3 dark:bg-boxdark-2 ${isMe ? 'rounded-br-none bg-primary text-white' : 'rounded-tl-none bg-whiten'} `}
-        >
-          <p>{message}</p>
+      <div className={isMe ? 'ml-auto max-w-[70%]' : 'max-w-[70%]'}>
+        <div className={`mb-1 rounded-2xl px-5 py-3 bg-muted ${isMe ? 'rounded-br-none bg-primary text-white' : 'rounded-tl-none'} `}>
+          <p>{msg}</p>
         </div>
-        <p className={`text-xs ${isMe ? 'text-end' : 'text-start'}`}>{time?.getTime()}</p>
+        <p className={`text-xs ${isMe ? 'text-end' : 'text-start'}`}>{time}</p>
       </div>
     );
   };
@@ -105,7 +109,7 @@ export const ChatBox = () => {
             </div>
           )
           :
-          !selectedChat?._id
+          !currentChat?._id
             ?
             (
               <div className="flex h-full w-full col-span-3 items-center justify-center">
@@ -114,65 +118,40 @@ export const ChatBox = () => {
             )
             : (
               <div className="flex h-full flex-col border-l border-stroke dark:border-strokedark col-span-3 ">
-                {/* <!-- ====== Chat Box Start --> */}
-                <div className="sticky flex items-center justify-between border-b border-stroke px-6 py-4.5 dark:border-strokedark">
-                  <div className="flex items-center">
-                    <div className="mr-4.5 h-13 w-full max-w-13 overflow-hidden rounded-full">
-                      {selectedChat?.otherUser?.photoUrl ? (
-                        <img
-                          src={selectedChat?.otherUser?.photoUrl}
-                          alt="avatar"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      ) : (
-                        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-black capitalize text-white ">
-                          {selectedChat?.otherUser?.username?.charAt(0)}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <h5 className="w-max font-medium capitalize text-black dark:text-white ">
-                        {selectedChat?.otherUser?.username}
-                      </h5>
-                    </div>
+
+                <div className="bg-muted sticky flex items-center justify-between border-b border-stroke h-20 px-6 py-3 dark:border-strokedark">
+                  <div className="flex items-center gap-4 ">
+                    <Avatar className='w-12 h-12 bg-black text-white ' >
+                      <AvatarImage src={otherUser?.photoUrl} />
+                      <AvatarFallback className='capitalize bg-inherit' >{otherUser?.username?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <h5 className="w-max font-medium capitalize text-black ">
+                      {otherUser?.username}
+                    </h5>
                   </div>
                 </div>
-                <div ref={scrollRef} className="n-scrollbar h-full max-h-full space-y-3.5 overflow-y-auto px-6 py-7.5 ">
-                  {currentChat?.messages?.map((msg: Message, index: number) => (
+
+                <div ref={scrollRef} className="h-[32.2rem] flex flex-col gap-2 overflow-y-auto px-6 py-4 ">
+                  {currentChat?.messages?.map((message: Message, index: number) => (
                     <MessageComponent
                       key={index}
-                      name={selectedChat?.otherUser?.username as string}
-                      message={msg.text}
-                      time={msg.timestamp}
-                      isMe={msg?.sender?._id == currentUserId}
+                      message={message}
                     />
                   ))}
                 </div>
-                <div className="sticky bottom-0 border-t border-stroke bg-white px-6 py-5 dark:border-strokedark dark:bg-boxdark">
-                  <form className="flex items-center justify-between space-x-4.5">
-                    <div className="relative w-full">
-                      <input
-                        type="text"
-                        placeholder={"Type your message"}
-                        className="h-13 w-full rounded-md border border-stroke bg-gray pl-5 pr-19 text-black placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white"
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault(); // Prevent the default Enter key behavior (line break)
-                            onSendMessage(); // Call the sendMessageHandler when Enter is pressed
-                          }
-                        }}
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      title="Send Message"
-                      onClick={(e) => { e.preventDefault(); onSendMessage(); }}
-                      className="flex h-13 w-full max-w-13 items-center justify-center rounded-md bg-primary text-white hover:bg-opacity-90 disabled:cursor-not-allowed disabled:bg-primary/75"
-                    >
+                <div className="sticky bottom-0 border-t border-stroke bg-white px-6 h-24 py-4 dark:border-strokedark dark:bg-boxdark">
+                  <form className="relative flex items-center justify-between gap-2 h-full ">
+                    <Input
+                      type="text"
+                      placeholder={"Type your message"}
+                      value={messageInput}
+                      className='h-full focus:border-none'
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      onKeyPress={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onSendMessage(); } }}
+                    />
+                    <Button className='absolute right-1 top-1/2 transform -translate-y-1/2 h-[80%]' onClick={(e) => { e.preventDefault(); onSendMessage(); }}>
                       <Send />
-                    </button>
+                    </Button>
                   </form>
                 </div>
 

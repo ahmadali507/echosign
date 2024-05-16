@@ -29,7 +29,7 @@ export const contact = (formData: ContactData) => API.post(`/auth/contact`, form
 // users
 export const getUsers = () => API.get(`/user/all`);
 export const getUser = (userId: string) => API.get(`/user/single/${userId}`);
-export const updateUser = (userId: string, profileData: { firstName: string, lastName: string }) => API.put(`/user/single/${userId}`, profileData);
+export const updateUser = (userId: string, profileData: { firstName: string, lastName: string, bio: string }) => API.put(`/user/single/${userId}`, profileData);
 export const getProfile = () => API.get(`/user/profile`);
 export const updateProfile = (profileData: User) => API.put(`/user/profile`, profileData);
 export const updatePassword = (passwordData: { oldPassword: string, newPassword: string }) => API.put(`/user/password`, passwordData);
