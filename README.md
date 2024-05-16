@@ -13,7 +13,7 @@ EchoSign is an AI-powered system built upon OpenCV, React, and Spring Boot that 
 **System Requirements:**
 - OpenCV
 - React
-- Spring Boot
+- fastapi
 - Node.js
 - Web browser with HTML5 and WebSocket support
 
@@ -22,7 +22,10 @@ EchoSign is an AI-powered system built upon OpenCV, React, and Spring Boot that 
 2. Navigate to the `frontend` directory and install dependencies using `npm install`.
 3. Run the frontend server using `npm start`.
 4. Navigate to the `backend` directory and build the Spring Boot application.
-5. Start the Spring Boot server.
+5. Before performing the gesture recognition, you should have python configured in your environment and required dependencies installed.
+6. you should install "mediapipe, tensorflow, numpy, vision, uvicorn, os, requests, fastapi, keras, scikit-learn" into your python environment. 
+7. after installing all the requried python modules. navigate into the model folder. 
+8. run the fastapi server . by writing "uvicorn learn:app".
 
 **Usage:**
 1. Access the EchoSign web interface through your preferred web browser.
@@ -47,4 +50,4 @@ Contributions to EchoSign are welcome! Please follow these steps:
 - Special thanks to the OpenCV, React, and Spring Boot communities for their invaluable contributions.
 
 **Contact:**
-For inquiries or support, please contact at our [email address](naumanch969@gmail.com).
+For inquiries or support, please contact at our [kashifshareef04@gmail.com](naumanch969@gmail.com).

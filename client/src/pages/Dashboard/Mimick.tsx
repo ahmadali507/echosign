@@ -24,7 +24,7 @@ const Mimick = () => {
         const formData = new FormData();
         formData.append("image", file);
 
-        const requestUrl = "http://127.0.0.1:8001/detect";
+        const requestUrl = "http://127.0.0.1:8000/detect";
 
         try {
             const response = await axios.post(requestUrl, formData, {
@@ -38,6 +38,7 @@ const Mimick = () => {
         } catch (error) {
             console.error('Error detecting gesture:', error);
             setOutputGesture("NO such gesture is registered for detection uptill now.")
+            setDetectedText("NO such gesture is registered for detection uptill now.")
         }
     }
 
