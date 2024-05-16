@@ -45,7 +45,7 @@ const Login = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err)
+        console.error(err)
       })
       .finally(() => {
         setLoading(false)

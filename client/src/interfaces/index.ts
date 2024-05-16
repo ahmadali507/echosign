@@ -31,5 +31,24 @@ export interface ContactData {
   email: string,
   subject: string,
   message: string
+}
 
+export interface Chat {
+  _id?: string;
+  lastMessage: string;
+  lastMessageTimestamp: Date;
+  participants: User[] | string[];
+  messages?: Message[];
+  createdAt?: Date
+  updatedAt?: Date
+}
+export interface Message {
+  _id?: string;
+  receiver: User | string;
+  sender: User | string;
+  timestamp: Date;
+  readBy: User[] | string[];
+  text: string;
+  createdAt?: Date
+  updatedAt?: Date
 }

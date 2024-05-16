@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux'
 import UserCard from './UserCard'
 import { Pagination } from '@mui/material'
 import { empty } from '@/assets'
+import { User } from '@/interfaces'
 import { RootState } from '@/store/store'
 
-const Find = ({ totalPages, page, setPage }: { totalPages: number, page: number, setPage: any }) => {
+const Find = ({ totalPages, page, setPage, data }: { totalPages: number, page: number, setPage: any, data: User[] }) => {
 
   //////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
-  const { users, isLoading: usersFetching } = useSelector((state: RootState) => state.user)
+  const { isLoading: usersFetching } = useSelector((state: RootState) => state.user)
   const { isLoading: friendsFetching } = useSelector((state: RootState) => state.friend)
 
 
@@ -23,7 +24,7 @@ const Find = ({ totalPages, page, setPage }: { totalPages: number, page: number,
               <UserCard.Skeleton key={index} />
             ))
             :
-            users.length == 0
+            data.length == 0
               ?
               <div className='col-span-4 w-full flex flex-col justify-center items-center grayscale '>
                 <img src={empty} alt='Empty' className='w-96 h-96 grayscale ' />
@@ -31,7 +32,7 @@ const Find = ({ totalPages, page, setPage }: { totalPages: number, page: number,
                 <span className='text-muted-foreground text-center text-md ' >It's our fault not yours.</span>
               </div>
               :
-              users.map((friend, index) => (
+              data.map((friend, index) => (
                 <UserCard key={index} friend={friend} type={'all'} />
               ))
         }

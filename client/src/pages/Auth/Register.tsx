@@ -32,6 +32,8 @@ const Register = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!formData?.firstName) return toast.error('First name is required.')
+    if (!formData?.lastName) return toast.error('Last name is required.')
     if (!formData?.username) return toast.error('Username is required.')
     if (!formData?.email) return toast.error('Email is required.')
     if (!formData?.password) return toast.error('Password is required.')
@@ -47,7 +49,7 @@ const Register = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err)
+        console.error(err)
       })
       .finally(() => {
         setLoading(false)

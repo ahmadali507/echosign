@@ -1,14 +1,9 @@
-const io = require('socket.io')(8900, {
-    cors: {
-        origin: 'http://localhost:5173',
-    },
-});
+const io = require('socket.io')(8900, { cors: { origin: 'http://localhost:5173' }, });
 
 let users = [];
 
 const addUser = (userId, socketId, email) => {
-    !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId, email });
+    !users.some((user) => user.userId === userId) && users.push({ userId, socketId, email });
 };
 
 const removeUser = (socketId) => {
@@ -32,18 +27,11 @@ io.on('connection', (socket) => {
     });
 
     //send and get message
-    socket.on(
-        'sendMessage',
-        ({ senderId, receiverId, text, timestamp, readBy }) => {
-            const user = getUser(receiverId);
-            if (!user) console.error('user not found - receiverId = ' + receiverId);
-            io.to(user?.socketId).emit('getMessage', {
-                senderId,
-                text,
-                timestamp,
-                readBy,
-            });
-        }
+    socket.on('sendMessage', ({ senderId, receiverId, text, timestamp, readBy }) => {
+        const user = getUser(receiverId);
+        if (!user) console.error('user not found - receiverId = ' + receiverId);
+        io.to(user?.socketId).emit('getMessage', { senderId, text, timestamp, readBy, });
+    }
     );
 
     //when disconnect

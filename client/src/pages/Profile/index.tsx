@@ -63,7 +63,7 @@ const Profile = () => {
                 setFormData(initialData)
             })
             .catch((err: any) => {
-                console.log(err)
+                console.error(err)
             })
             .finally(() => {
                 setLoading(pre => ({ ...pre, password: false }))
@@ -81,7 +81,7 @@ const Profile = () => {
                 setFormData(initialData)
             })
             .catch((err: any) => {
-                console.log(err)
+                console.error(err)
             })
             .finally(() => {
                 setLoading(pre => ({ ...pre, profile: false }))

@@ -182,11 +182,7 @@ export const getReceivedRequests = async (req, res, next) => {
   // this request is made by the sender
   try {
     const userId = req.user?._id;
-    const user = await User.findById(
-      userId,
-      { receivedRequests: 1 },
-      { firstName: 1, lastName: 1, username: 1, email: 1, photoUrl: 1 }
-    ).populate("receivedRequests");
+    const user = await User.findById(userId, { receivedRequests: 1 }, { firstName: 1, lastName: 1, username: 1, email: 1, photoUrl: 1 }).populate("receivedRequests");
     res.status(200).json(user?.receivedRequests);
   } catch (error) {
     next(createError(res, 500, error.message));
