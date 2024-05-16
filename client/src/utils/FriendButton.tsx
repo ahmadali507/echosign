@@ -83,7 +83,7 @@ const FriendButton = ({ user }: { user: User }) => {
                     <Button variant='secondary' className="" onClick={onCreateChat}>
                         {loading.chat ? 'Loading' : 'Message'}
                     </Button>
-                    <Button className="bg-black hover:bg-black/80" onClick={() => navigate(`/user/${user?._id}`)}>
+                    <Button className="bg-black hover:bg-black/80 text-white" onClick={() => navigate(`/user/${user?._id}`)}>
                         View Profile
                     </Button>
                 </div>

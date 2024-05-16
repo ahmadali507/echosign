@@ -163,7 +163,7 @@ export const getSuggestedUsers = async (req, res, next) => {
 
     res.status(200).json(usersWithMutualFriends);
   } catch (err) {
-    console.log('err', err)
+    console.error('err', err)
     next(createError(res, 500, "Internal Server Error"));
   }
 };

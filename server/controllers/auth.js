@@ -21,11 +21,11 @@ export const register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = await User.create({ username, email, password: hashedPassword });
+    const newUser = await User.create({ username, email, password: hashedPassword, ...req.body });
     const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
     res.status(200).json({ result: newUser, message: "Registered successfully.", token });
   } catch (err) {
-    console.log('error', err)
+    console.error('error', err)
     next(createError(res, 500, err.message));
   }
 };
@@ -67,7 +67,7 @@ export const contact = async (req, res, next) => {
     await Contact.create({ ...req.body })
     res.status(200).json({ message: "Form submitted successfully.", });
   } catch (err) {
-    console.log('error', err)
+    console.error('error', err)
     next(createError(res, 500, err.message));
   }
 };
