@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 
 function TermsAndConditions() {
 
@@ -60,7 +61,7 @@ function TermsAndConditions() {
                     </li>
                     <li className="font-bold text-lg">
                         Contact Us:
-                        <span className="font-normal text-base">If you have any questions or concerns about these Terms and Conditions, please contact us at <span className="underline">echosign@gmail.com</span>.</span>
+                        <span className="font-normal text-base">If you have any questions or concerns about these Terms and Conditions, please contact us at <Link to='/contact' className='text-blue-400 hover:text-green hover:underline cursor-pointer'>Contact Us</Link>.</span>
                     </li>
                 </ol>
                 <p>By using EchoSign, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use EchoSign.</p>
