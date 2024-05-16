@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookie from "js-cookie";
-import { ContactData, User } from "../../interfaces";
+import { Chat, ContactData, Message, User } from "../../interfaces";
 import { SERVER_URL } from "@/constants";
 
 const API = axios.create({ baseURL: SERVER_URL });
@@ -37,8 +37,6 @@ export const editPersonalDetails = (type: "interests" | "hobbies" | "books" | "p
 export const deleteUser = (userId: string) => API.delete(`/user/delete/${userId}`);
 
 // friends
-
-// friends
 export const sendFriendRequest = (receiverId: string) => API.put(`/friend/request/send/${receiverId}`);
 export const rejectFriendRequest = (receiverId: string) => API.put(`/friend/request/reject/${receiverId}`);
 export const removeFriendRequest = (receiverId: string) => API.put(`/friend/request/remove/${receiverId}`);
@@ -49,3 +47,14 @@ export const searchFriends = (query: string) => API.get(`/friend/search${query}`
 export const searchUsers = (query: string) => API.get(`/friend/search-user${query}`);
 export const getSentRequests = (query: string) => API.get(`/friend/sent-requests${query}`);
 export const getReceivedRequests = (query: string) => API.get(`/friend/received-requests${query}`);
+
+// Chat
+export const getChats = () => API.get(`/chat/all`)
+export const getMessages = (chatId: string) => API.get(`/chat/messages/${chatId}`)
+export const getUnreadMessageCount = (chatId: string) => API.get(`/chat/unread/${chatId}`)
+export const getChat = (chatId: string) => API.get(`/chat/single/${chatId}`)
+export const createChat = (chat: Chat) => API.post(`/chat/single`, chat)
+export const updateChat = (chatId: string, chat: Chat) => API.put(`/chat/single/${chatId}`, chat)
+export const sendMessage = (chatId: string, message: Message) => API.put(`/chat/message/${chatId}`, message)
+export const markMessageAsRead = (chatId: string, messageId: string) => API.put(`/chat/mark-as-read/${chatId}/${messageId}`)
+export const markAllMessagesAsRead = (chatId: string) => API.put(`/chat/mark-all-as-read/${chatId}`)

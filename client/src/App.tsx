@@ -9,6 +9,7 @@ import { RootState } from "./store/store";
 import { getProfile } from "./store/reducers/userSlice";
 import Authenticated from "./wrappers/Authenticated";
 import NotFound from "./components/NotFound";
+import Chat from "./pages/Chat";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" element={<Authenticated><Profile /></Authenticated>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/users" element={<Authenticated><Users /></Authenticated>} />
+        <Route path="/chat" element={<Authenticated><Chat /></Authenticated>} />
         <Route path="/user/:userId" element={<Profile />} />
 
         <Route path="/register" element={<Register />} />

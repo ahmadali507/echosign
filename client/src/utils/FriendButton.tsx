@@ -21,41 +21,32 @@ const FriendButton = ({ user }: { user: User }) => {
     const isFriendRequestReceived = receivedRequests.find(f => f._id === user._id);
 
     //////////////////////////////////////////////////////// STATES /////////////////////////////////////////////////////////
-    const [loading, setLoading] = useState({
-        send: false,
-        accept: false,
-        reject: false,
-        remove: false,
-    });
+    const [loading, setLoading] = useState({ send: false, accept: false, reject: false, remove: false, });
 
     //////////////////////////////////////////////////////// FUNCTIONS /////////////////////////////////////////////////////////
     const handleSendFriendRequest = () => {
         setLoading((prev) => ({ ...prev, send: true }));
-        dispatch<any>(sendFriendRequest(user?._id as string)).then(() =>
-            setLoading((prev) => ({ ...prev, send: false }))
-        );
+        dispatch<any>(sendFriendRequest(user?._id as string)).then(() => setLoading((prev) => ({ ...prev, send: false })));
     };
 
     const handleAcceptFriendRequest = () => {
         setLoading((prev) => ({ ...prev, accept: true }));
-        dispatch<any>(acceptFriendRequest(user?._id as string)).then(() =>
-            setLoading((prev) => ({ ...prev, accept: false }))
-        );
+        dispatch<any>(acceptFriendRequest(user?._id as string)).then(() => setLoading((prev) => ({ ...prev, accept: false })));
     };
 
     const handleRemoveFriendRequest = () => {
         setLoading((prev) => ({ ...prev, remove: true }));
-        dispatch<any>(removeFriendRequest(user?._id as string)).then(() =>
-            setLoading((prev) => ({ ...prev, remove: false }))
-        );
+        dispatch<any>(removeFriendRequest(user?._id as string)).then(() => setLoading((prev) => ({ ...prev, remove: false })));
     };
 
     const handleRejectFriendRequest = () => {
         setLoading((prev) => ({ ...prev, reject: true }));
-        dispatch<any>(rejectFriendRequest(user?._id as string)).then(() =>
-            setLoading((prev) => ({ ...prev, reject: false }))
-        );
+        dispatch<any>(rejectFriendRequest(user?._id as string)).then(() => setLoading((prev) => ({ ...prev, reject: false })));
     };
+
+    const onCreateChat = () => {
+
+    }
 
     return (
         <div>

@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import generalRoutes from "./routes/general.js";
 import friendRoutes from "./routes/friend.js";
+import chatRoutes from "./routes/chat.js";
 
 dotenv.config();
 const app = express();
@@ -33,6 +34,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/general", generalRoutes);
 app.use("/friend", friendRoutes);
+app.use("/chat", chatRoutes);
 
 app.use((err, req, res, next) => {
   const messae = err.messae || "Something went wrong.";
