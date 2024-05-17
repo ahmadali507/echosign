@@ -22,6 +22,7 @@ const Chat = () => {
 
   /////////////////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////////////
   useEffect(() => {
+    console.log('isconnectedtosocket', isConnectedToSocket, loggedUser)
     if (!isConnectedToSocket && loggedUser) {
       connectToSocketIO(setIsConnectedToSocket, loggedUser as User, setLiveUsers, setArrivalMessage);
     }

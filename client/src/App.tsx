@@ -10,6 +10,7 @@ import { getProfile } from "./store/reducers/userSlice";
 import Authenticated from "./wrappers/Authenticated";
 import NotFound from "./components/NotFound";
 import Chat from "./pages/Chat";
+import { getChats } from "./store/reducers/chatSlice";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
 
   useEffect(() => {
     if (!loggedUser) dispatch<any>(getProfile())
+    dispatch<any>(getChats())
   }, [loggedUser, dispatch])
 
   return (
