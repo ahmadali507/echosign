@@ -96,7 +96,7 @@ const Footer = () => {
 
             <div className="flex flex-col justify-center items-center gap-2 ">
                 <div className="flex justify-center gap-4 text-black text-sm font-bold">
-                    <Link to='/' className='hover:text-green hover:underline cursor-pointer'>Help</Link>
+                    <Link to='/HowItWork' className='hover:text-green hover:underline cursor-pointer'>Help</Link>
                     <Link to='/' className='hover:text-green hover:underline cursor-pointer'>FAQs</Link>
                     <Link to='/about' className='hover:text-green hover:underline cursor-pointer'>About Us</Link>
                     <Link to='/contact' className='hover:text-green hover:underline cursor-pointer'>Contact Us</Link>

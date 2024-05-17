@@ -118,7 +118,7 @@ const FriendButton = ({ user }: { user: User }) => {
                     {
                         !isProfilePage &&
                         <Button
-                            className="bg-black hover:bg-black/80"
+                            className="bg-black hover:bg-black/80 text-white"
                             onClick={() => navigate(`/user/${user?._id}`)}
                         >
                             View Profile
