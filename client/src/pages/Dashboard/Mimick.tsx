@@ -33,8 +33,14 @@ const Mimick = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
+            console.log(response.data.gesture); 
             setOutputGesture(response.data.gesture);
-            setDetectedText(response.data.gesture);
+            if(!response.data.gesture)
+                 {setDetectedText("NOT a standard gesture");}
+            else{
+                setDetectedText(response.data.gesture); 
+            }
+            
 
         } catch (error) {
             console.error('Error detecting gesture:', error);
