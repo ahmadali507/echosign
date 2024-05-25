@@ -43,9 +43,6 @@ const Users = () => {
     useEffect(() => {
         setData({ friends, receivedRequests, sentRequests, suggestedUsers, users })
     }, [friends, receivedRequests, sentRequests, suggestedUsers, users])
-    useEffect(() => {
-        console.log('data', data, searchValue)
-    }, [data])
     ////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////
     const onSearch = () => {
         setSearchedValue(searchValue)

@@ -22,7 +22,6 @@ const Chat = () => {
 
   /////////////////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////////////
   useEffect(() => {
-    console.log('isconnectedtosocket', isConnectedToSocket, loggedUser)
     if (!isConnectedToSocket && loggedUser) {
       connectToSocketIO(setIsConnectedToSocket, loggedUser as User, setLiveUsers, setArrivalMessage);
     }
@@ -31,7 +30,6 @@ const Chat = () => {
 
     if (!arrivalMessage) return
 
-    console.log('Arrival Message', arrivalMessage)
     const newChats = chats.map((c: TChat) => {
       const pIds = c.participants.map(p => String((p as User)?._id));
       const isPidsIncludes = pIds.findIndex(p => p == arrivalMessage?.sender) !== -1;
