@@ -31,7 +31,6 @@ io.on('connection', (socket) => {
     //send and get message
     socket.on('sendMessage', ({ sender, receiver, text, timestamp, readBy }) => {
         const receiverUser = getUser(receiver);
-        console.log('\nuser', receiverUser)
         if (!receiverUser) console.error('user not found - receiverId = ' + receiver);
         io.to(receiverUser?.socketId).emit('getMessage', { sender, receiver, text, timestamp, readBy, });
     });

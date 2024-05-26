@@ -28,17 +28,14 @@ export const getRelativeTime = (date: Date) => {
 export const connectToSocketIO = (setIsConnectedToSocket: any, loggedUser: User, setLiveUsers: any, setArrivalMessage: any) => {
     const serverURL = SOCKET_URL;
     const socket = io(serverURL);
-    console.log('SOCKET', serverURL)
     socket.on("connect", () => {
         setIsConnectedToSocket(true);
         socket.emit('addUser', { userId: loggedUser?._id, socketId: socket.id, email: loggedUser?.email });
         socket.on('getUsers', (lUsers) => { setLiveUsers(lUsers) })
         socket.on('getMessage', (message) => { setArrivalMessage(message) })
-        console.log("Connected to the server");
     })
     socket.on("disconnect", () => {
         setIsConnectedToSocket(false);
-        console.log("Disconnected from the server");
     })
 };
 
