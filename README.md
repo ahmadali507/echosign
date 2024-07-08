@@ -43,11 +43,11 @@ Contributions to EchoSign are welcome! Please follow these steps:
 
 **Authors:**
 - Muhammad Nauman Chaudhry
-- Ahmad Ali Shahid
 - Yusra Zainab
+- Ahmad Ali Shahid
 
 **Acknowledgments:**
 - Special thanks to the OpenCV, React, and Spring Boot communities for their invaluable contributions.
 
 **Contact:**
-For inquiries or support, please contact at our [kashifshareef04@gmail.com](naumanch969@gmail.com).
+For inquiries or support, please contact at our [naumanch969@gmail.com](naumanch969@gmail.com).
