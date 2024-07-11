@@ -50,4 +50,4 @@ Contributions to EchoSign are welcome! Please follow these steps:
 - Special thanks to the OpenCV, React, and Spring Boot communities for their invaluable contributions.
 
 **Contact:**
-For inquiries or support, please contact at our [naumanch969@gmail.com](naumanch969@gmail.com).
+For inquiries or support, please contact at our [naumanch969@gmail.com](naumanch969@gmail.com) or [kashifshareef04@gmail.com](kashifshareef04@gmail.com).
